@@ -1,3 +1,5 @@
+let PVData;
+
 // import des données de paroiVitreeData
 
 const vitrage = [
@@ -1148,6 +1150,22 @@ const fenetre = [
 // fonctions pour le calcul des déperditions des fenêtres et portes fenêtres
 
 // fonction pour déterminer Ug (type de vitrage)
+function determineUg(type, orientation, remplissage, VIR, epaisseur) {
+  let Ug = 0;
+  vitrage.forEach((vitrage) => {
+    switch (type) {
+      case 'SV':
+        Ug = vitrage.UgSv
+        break;
+    
+      default:
+        break;
+    }
+    console.log(vitrage);
+    return Ug;
+    
+  });
+}
 // fonction pour déterminer Uw (Ug, type de paroi, menuiserie)
 // fonction pour déterminer Ujn (Uw, type de fermeture)
 // fonction pour déterminer U baie (Ujn ou Uw)
@@ -1157,3 +1175,5 @@ const fenetre = [
 
 console.log(vitrage);
 console.log(fenetre);
+console.log("------->");
+console.log(determineUg("SV","","",false,10));

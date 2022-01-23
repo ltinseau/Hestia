@@ -1,4 +1,4 @@
-export const paroieVitree = {
+{
     vitrage: [
         {
             type: "SV",
