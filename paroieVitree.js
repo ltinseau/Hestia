@@ -2,7 +2,7 @@ let PVData;
 
 // import des données de paroiVitreeData
 
-const vitrage = [
+const vitrages = [
   {
     type: "SV",
     orientation: "",
@@ -285,7 +285,7 @@ const vitrage = [
   },
 ];
 
-const fenetre = [
+const fenetres = [
   {
     menuiserie: "metal",
     rupturePontThermique: true,
@@ -1151,20 +1151,28 @@ const fenetre = [
 
 // fonction pour déterminer Ug (type de vitrage)
 function determineUg(type, orientation, remplissage, VIR, epaisseur) {
-  let Ug = 0;
-  vitrage.forEach((vitrage) => {
-    switch (type) {
-      case 'SV':
-        Ug = vitrage.UgSv
-        break;
-    
-      default:
-        break;
-    }
+  //console.log(vitrage);
+  var output = 0;
+  let i = 0;
+  vitrages.forEach((vitrage) => {
     console.log(vitrage);
-    return Ug;
-    
+    switch (type) {
+      case "SV":
+        vitrage.type == "SV" ? (output = vitrage.UgSV) : () => {};
+        break;
+      case "DV":
+        output = 1;
+        break;
+      case "TV":
+        output = 2;
+        break;
+      default:
+        output = 5.8;
+    }
+    console.log(`N° ${i++}`);
+    console.log(output);
   });
+  return output;
 }
 // fonction pour déterminer Uw (Ug, type de paroi, menuiserie)
 // fonction pour déterminer Ujn (Uw, type de fermeture)
@@ -1173,7 +1181,8 @@ function determineUg(type, orientation, remplissage, VIR, epaisseur) {
 // export des données
 // export { vitrage, fenetre };
 
-console.log(vitrage);
-console.log(fenetre);
+console.log(vitrages);
+console.log(fenetres);
 console.log("------->");
-console.log(determineUg("SV","","",false,10));
+let rUg = determineUg("DV", "", "", false, 10);
+console.log(rUg);
