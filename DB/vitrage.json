@@ -291,5 +291,128 @@
                 "20": 0.6
             }
         }
+    ],
+    "fenetre": [
+        {
+            "menuiserie": "metal",
+            "rupturePontThermique": true,
+            "ouverture": "battante",
+            "epaisseur": {}
+        }
+        {
+            "menuiserie": "metal",
+            "rupturePontThermique": true,
+            "ouverture": "coulissante",
+            "porteFenetre": false,
+            "epaisseur": {}
+        }
+        {
+            "menuiserie": "metal",
+            "rupturePontThermique": true,
+            "ouverture": "battante",
+            "porteFenetre": true,
+            "epaisseur": {}
+        }
+        {
+            "menuiserie": "metal",
+            "rupturePontThermique": true,
+            "ouverture": "coulissante",
+            "porteFenetre": true,
+            "epaisseur": {}
+        }
+        {
+            "menuiserie": "metal",
+            "rupturePontThermique": false,
+            "ouverture": "battante",
+            "porteFenetre": false,
+            "epaisseur": {}
+        }
+        {
+            "menuiserie": "metal",
+            "rupturePontThermique": false,
+            "ouverture": "coulissante",
+            "soubassement": true,
+            "epaisseur": {}
+        }
+        {
+            "menuiserie": "metal",
+            "rupturePontThermique": false,
+            "ouverture": "battante",
+            "porteFenetre": true,
+            "epaisseur": {}
+        }
+        {
+            "menuiserie": "metal",
+            "rupturePontThermique": false,
+            "ouverture": "coulissante",
+            "porteFenetre": true,
+            "epaisseur": {}
+        }
+        {
+            "menuiserie": "PVC",
+            "ouverture": "battante",
+            "porteFenetre": false,
+            "epaisseur": {}
+        }
+        {
+            "menuiserie": "PVC",
+            "ouverture": "coulissante",
+            "porteFenetre": false,
+            "epaisseur": {}
+        }
+        {
+            "menuiserie": "PVC",
+            "ouverture": "battante",
+            "porteFenetre": true,
+            "soubassement": false,
+            "epaisseur": {}
+        }
+        {
+            "menuiserie": "PVC",
+            "ouverture": "coulissante",
+            "porteFenetre": true,
+            "soubassement": false,
+            "epaisseur": {}
+        }
+        {
+            "menuiserie": "PVC",
+            "ouverture": "battante",
+            "porteFenetre": true,
+            "soubassement": true,
+            "epaisseur": {}
+        }
+        {
+            "menuiserie": "bois",
+            "ouverture": "battante",
+            "porteFenetre": false,
+            "epaisseur": {}
+        }
+        {
+            "menuiserie": "bois",
+            "ouverture": "coulissante",
+            "porteFenetre": false,
+            "epaisseur": {}
+        }
+        {
+            "menuiserie": "bois",
+            "ouverture": "battante",
+            "porteFenetre": true,
+            "soubassement": false,
+            "epaisseur": {}
+        }
+        {
+            "menuiserie": "bois",
+            "ouverture": "coulissante",
+            "porteFenetre": true,
+            "soubassement": false,
+            "epaisseur": {}
+        }
+        {
+            "menuiserie": "bois",
+            "ouverture": "battante",
+            "porteFenetre": true,
+            "soubassement": true,
+            "epaisseur": {}
+        }
     ]
 }
