@@ -1660,8 +1660,12 @@ function determineDeltaR(id) {
 }
 // fonction pour déterminer Ujn (Uw, type de fermeture)
 function determineUjn(Uw, deltaR) {
-  let output;
-
+  let output = Uw;
+  occultantsResistances.forEach((occultant) => {
+    if (occultant.deltaR == deltaR) {
+      output = occultant.Ujn[Uw];
+    }
+  });
   return output;
 }
 // fonction pour déterminer U baie (Ujn ou Uw)
@@ -1681,7 +1685,7 @@ console.log(occultantsResistances);
 console.log("------->");
 
 let rUg = determineUg("DV", "horizontal", "airSec", false, 6, null);
-let rUw = determineUw("metal", "coulissante", true, false, false, rUg);
+let rUw = determineUw("PVC", "coulissante", true, false, false, rUg);
 
 // contrôle fonction determineUg
 erreurVitrage == false
@@ -1698,5 +1702,9 @@ let UwDF = determineUwDF(1.8, 6.6);
 console.log(`UwDV = ${UwDF}`);
 
 // contrôle fonction determineDeltaR
-let deltaR = determineDeltaR(3);
+let deltaR = determineDeltaR(8);
 console.log(`DeltaR = ${deltaR}`);
+
+// contrôle fonction determineUjn
+let Ujn = determineUjn(rUw, deltaR);
+console.log(`Ujn = ${Ujn}`);
