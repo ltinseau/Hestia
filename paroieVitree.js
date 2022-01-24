@@ -287,7 +287,6 @@ const vitrages = [
     },
   },
 ];
-
 // base de données fenêtres:
 const fenetres = [
   {
@@ -1230,22 +1229,279 @@ const occultants = [
     DeltaR: 0.25,
   },
   {
-    id: 4,
+    id: 15,
     descriptif: "Persienne coulissante PVC ou bois (e ≤ 22 mm)",
     DeltaR: 0.19,
   },
   {
-    id: 15,
+    id: 16,
     descriptif: "Persienne coulissante PVC ou bois (e > 22 mm)",
     DeltaR: 0.25,
   },
   {
-    id: 16,
+    id: 17,
     descriptif: "Fermeture isolée sans ajours en position déployée",
     DeltaR: 0.25,
   },
 ];
-
+const occultantsResistances = [
+  {
+    deltaR: 0.08,
+    Ujn: {
+      1: 1,
+      2: 1.9,
+      3: 2.7,
+      4: 3.5,
+      5: 4.3,
+      6: 5,
+      0.8: 0.8,
+      0.9: 0.9,
+      1.1: 1.1,
+      1.2: 1.1,
+      1.3: 1.2,
+      1.4: 1.3,
+      1.5: 1.4,
+      1.6: 1.5,
+      1.7: 1.6,
+      1.8: 1.7,
+      1.9: 1.8,
+      2.1: 1.9,
+      2.2: 2,
+      2.3: 2.1,
+      2.4: 2.2,
+      2.5: 2.3,
+      2.6: 2.4,
+      2.7: 2.5,
+      2.8: 2.5,
+      2.9: 2.6,
+      3.1: 2.8,
+      3.2: 2.9,
+      3.3: 3,
+      3.4: 3,
+      3.5: 3.1,
+      3.6: 3.2,
+      3.7: 3.3,
+      3.8: 3.4,
+      3.9: 3.4,
+      4.1: 3.6,
+      4.2: 3.7,
+      4.3: 3.7,
+      4.4: 3.8,
+      4.5: 3.9,
+      4.6: 4,
+      4.7: 4.1,
+      4.8: 4.1,
+      4.9: 4.2,
+      5.1: 4.4,
+      5.2: 4.4,
+      5.3: 4.5,
+      5.4: 4.6,
+      5.5: 4.7,
+      5.6: 4.7,
+      5.7: 4.8,
+      5.8: 4.9,
+      5.9: 5,
+      6.1: 5.1,
+      6.2: 5.2,
+      6.3: 5.2,
+      6.4: 5.3,
+      6.5: 5.4,
+      6.6: 5.5,
+    },
+  },
+  {
+    deltaR: 0.15,
+    Ujn: {
+      1: 0.9,
+      2: 1.8,
+      3: 2.6,
+      4: 3.3,
+      5: 4,
+      6: 4.6,
+      0.8: 0.8,
+      0.9: 0.8,
+      1.1: 1,
+      1.2: 1.1,
+      1.3: 1.2,
+      1.4: 1.3,
+      1.5: 1.4,
+      1.6: 1.5,
+      1.7: 1.5,
+      1.8: 1.6,
+      1.9: 1.7,
+      2.1: 1.9,
+      2.2: 1.9,
+      2.3: 2,
+      2.4: 2.1,
+      2.5: 2.2,
+      2.6: 2.3,
+      2.7: 2.3,
+      2.8: 2.4,
+      2.9: 2.5,
+      3.1: 2.6,
+      3.2: 2.7,
+      3.3: 2.8,
+      3.4: 2.9,
+      3.5: 2.9,
+      3.6: 3,
+      3.7: 3.1,
+      3.8: 3.1,
+      3.9: 3.2,
+      4.1: 3.4,
+      4.2: 3.4,
+      4.3: 3.5,
+      4.4: 3.6,
+      4.5: 3.6,
+      4.6: 3.7,
+      4.7: 3.8,
+      4.8: 3.8,
+      4.9: 3.9,
+      5.1: 4,
+      5.2: 4.1,
+      5.3: 4.2,
+      5.4: 4.2,
+      5.5: 4.3,
+      5.6: 4.4,
+      5.7: 4.4,
+      5.8: 4.5,
+      5.9: 4.6,
+      6.1: 4.7,
+      6.2: 4.8,
+      6.3: 4.8,
+      6.4: 4.9,
+      6.5: 5,
+      6.6: 5,
+    },
+  },
+  {
+    deltaR: 0.19,
+    Ujn: {
+      1: 0.9,
+      2: 1.7,
+      3: 2.5,
+      4: 3.1,
+      5: 3.8,
+      6: 4.4,
+      0.8: 0.7,
+      0.9: 0.8,
+      1.1: 1,
+      1.2: 1.1,
+      1.3: 1.2,
+      1.4: 1.3,
+      1.5: 1.3,
+      1.6: 1.4,
+      1.7: 1.5,
+      1.8: 1.6,
+      1.9: 1.6,
+      2.1: 1.8,
+      2.2: 1.9,
+      2.3: 2,
+      2.4: 2,
+      2.5: 2.1,
+      2.6: 2.2,
+      2.7: 2.2,
+      2.8: 2.3,
+      2.9: 2.4,
+      3.1: 2.5,
+      3.2: 2.6,
+      3.3: 2.7,
+      3.4: 2.7,
+      3.5: 2.8,
+      3.6: 2.9,
+      3.7: 2.9,
+      3.8: 3,
+      3.9: 3.1,
+      4.1: 3.2,
+      4.2: 3.3,
+      4.3: 3.3,
+      4.4: 3.4,
+      4.5: 3.5,
+      4.6: 3.5,
+      4.7: 3.6,
+      4.8: 3.7,
+      4.9: 3.7,
+      5.1: 3.8,
+      5.2: 3.9,
+      5.3: 4,
+      5.4: 4,
+      5.5: 4.1,
+      5.6: 4.2,
+      5.7: 4.2,
+      5.8: 4.3,
+      5.9: 4.3,
+      6.1: 4.5,
+      6.2: 4.5,
+      6.3: 4.6,
+      6.4: 4.6,
+      6.5: 4.7,
+      6.6: 4.8,
+    },
+  },
+  {
+    deltaR: 0.25,
+    Ujn: {
+      1: 0.9,
+      2: 1.7,
+      3: 2.4,
+      4: 3,
+      5: 3.6,
+      6: 4.2,
+      0.8: 0.7,
+      0.9: 0.8,
+      1.1: 1,
+      1.2: 1.1,
+      1.3: 1.1,
+      1.4: 1.2,
+      1.5: 1.3,
+      1.6: 1.4,
+      1.7: 1.4,
+      1.8: 1.5,
+      1.9: 1.6,
+      2.1: 1.7,
+      2.2: 1.8,
+      2.3: 1.9,
+      2.4: 2,
+      2.5: 2,
+      2.6: 2.1,
+      2.7: 2.2,
+      2.8: 2.2,
+      2.9: 2.3,
+      3.1: 2.4,
+      3.2: 2.5,
+      3.3: 2.6,
+      3.4: 2.6,
+      3.5: 2.7,
+      3.6: 2.7,
+      3.7: 2.8,
+      3.8: 2.9,
+      3.9: 2.9,
+      4.1: 3.1,
+      4.2: 3.1,
+      4.3: 3.2,
+      4.4: 3.2,
+      4.5: 3.3,
+      4.6: 3.4,
+      4.7: 3.4,
+      4.8: 3.5,
+      4.9: 3.6,
+      5.1: 3.7,
+      5.2: 3.7,
+      5.3: 3.8,
+      5.4: 3.8,
+      5.5: 3.9,
+      5.6: 4,
+      5.7: 4,
+      5.8: 4.1,
+      5.9: 4.1,
+      6.1: 4.3,
+      6.2: 4.3,
+      6.3: 4.4,
+      6.4: 4.4,
+      6.5: 4.5,
+      6.6: 4.5,
+    },
+  },
+];
 // fonction pour calculer l'epaisseur moyenne du triple vitrage
 //  La valeur retenue est egale ou juste inférieure aux valeurs suivantes: 6, 8, 10, 12, 14, 15, 16, 18, 20
 function epaisseurMoy(epaisseur1, epaisseur2) {
@@ -1388,7 +1644,6 @@ function determineUw(
   });
   return output;
 }
-
 // fonction pour déterminer Uw d'une double fenêtre
 function determineUwDF(Uw1, Uw2) {
   let output = 0;
@@ -1398,9 +1653,17 @@ function determineUwDF(Uw1, Uw2) {
 
   return output;
 }
-
+//fonction pour déterminer deltaR (id)
+function determineDeltaR(id) {
+  let output = occultants[id].DeltaR;
+  return output;
+}
 // fonction pour déterminer Ujn (Uw, type de fermeture)
+function determineUjn(Uw, deltaR) {
+  let output;
 
+  return output;
+}
 // fonction pour déterminer U baie (Ujn ou Uw)
 
 // export des données
@@ -1413,10 +1676,13 @@ console.log("base de donnée fenêtres :");
 console.log(fenetres);
 console.log("base de donnée occultants :");
 console.log(occultants);
+console.log("base de donnée Resistance occultants :");
+console.log(occultantsResistances);
 console.log("------->");
 
 let rUg = determineUg("DV", "horizontal", "airSec", false, 6, null);
 let rUw = determineUw("metal", "coulissante", true, false, false, rUg);
+
 // contrôle fonction determineUg
 erreurVitrage == false
   ? console.log(`Ug =  ${rUg}`)
@@ -1428,5 +1694,9 @@ erreurFenetre == false
   : console.log("fenêtre absente de la base");
 
 // contrôle fonction determineUwDF
-UwDF = determineUwDF(1.8, 6.6);
+let UwDF = determineUwDF(1.8, 6.6);
 console.log(`UwDV = ${UwDF}`);
+
+// contrôle fonction determineDeltaR
+let deltaR = determineDeltaR(3);
+console.log(`DeltaR = ${deltaR}`);
