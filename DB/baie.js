@@ -1,4 +1,3 @@
-let PVData;
 let erreurVitrage = true; // vérifie que le vitrage renseigné est présent dans la base de donnée vitrage
 let erreurFenetre = true; // vérifie que la fenêtre renseignée est présente dans la base de données fenetres
 
@@ -1737,7 +1736,6 @@ function determineUjn(Uw, deltaR) {
   });
   return output;
 }
-// fonction pour déterminer U baie (Ujn ou Uw)
 
 // fonction pour déterminer Up (nature, type)
 function determineUp(nature, type) {
@@ -1750,9 +1748,8 @@ function determineUp(nature, type) {
   return output;
 }
 
-// export des données
-// export { vitrage, fenetre };
-
+//-----------------------------------------------------------//
+/*
 // contrôle affichage bases de données
 console.log("base de donnée vitrages :");
 console.log(vitrages);
@@ -1764,10 +1761,12 @@ console.log("base de donnée Resistance occultants :");
 console.log(occultantsResistances);
 console.log("base de donnée portes :");
 console.log(portes);
+
 console.log("------->");
 
 let rUg = determineUg("DV", "horizontal", "airSec", false, 6, null);
 let rUw = determineUw("PVC", "coulissante", true, false, false, rUg);
+
 
 // contrôle fonction determineUg
 erreurVitrage == false
@@ -1794,3 +1793,16 @@ console.log(`Ujn = ${Ujn}`);
 // contrôle fonction determineUp
 let Up = determineUp("Toute menuiserie", "Porte opaque pleine isolée");
 console.log(`Up = ${Up}`);
+*/
+
+//-----------------------------------------------------------//
+
+// export des données
+export {
+  determineUg,
+  determineUw,
+  determineUwDF,
+  determineDeltaR,
+  determineUjn,
+  determineUp,
+};
