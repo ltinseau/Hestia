@@ -1,5 +1,6 @@
 let PVData;
-let erreurVitrage = true; // variable pour vérifier que le vitrage renseigné est présent dans la base de donnée
+let erreurVitrage = true; // vérifie que le vitrage renseigné est présent dans la base de donnée vitrage
+let erreurFenetre = true; // vérifie que la fenêtre renseignée est présente dans la base de données fenetres
 
 // import des données de paroiVitreeData
 // base de données vitrages:
@@ -293,7 +294,8 @@ const fenetres = [
     menuiserie: "metal",
     rupturePontThermique: true,
     ouverture: "battante",
-    epaisseur: {
+    porteFenetre: false,
+    Ug: {
       1: 1.7,
       2: 2.6,
       3: 3.4,
@@ -341,7 +343,7 @@ const fenetres = [
     rupturePontThermique: true,
     ouverture: "coulissante",
     porteFenetre: false,
-    epaisseur: {
+    Ug: {
       1: 1.8,
       2: 2.6,
       3: 3.5,
@@ -389,7 +391,7 @@ const fenetres = [
     rupturePontThermique: true,
     ouverture: "battante",
     porteFenetre: true,
-    epaisseur: {
+    Ug: {
       1: 1.5,
       2: 2.4,
       3: 3.3,
@@ -437,7 +439,7 @@ const fenetres = [
     rupturePontThermique: true,
     ouverture: "coulissante",
     porteFenetre: true,
-    epaisseur: {
+    Ug: {
       1: 1.6,
       2: 2.5,
       3: 3.4,
@@ -485,7 +487,7 @@ const fenetres = [
     rupturePontThermique: false,
     ouverture: "battante",
     porteFenetre: false,
-    epaisseur: {
+    Ug: {
       1: 2.3,
       2: 3.2,
       3: 4,
@@ -532,8 +534,8 @@ const fenetres = [
     menuiserie: "metal",
     rupturePontThermique: false,
     ouverture: "coulissante",
-    soubassement: true,
-    epaisseur: {
+    porteFenetre: false,
+    Ug: {
       1: 2.6,
       2: 3.4,
       3: 4.2,
@@ -581,7 +583,7 @@ const fenetres = [
     rupturePontThermique: false,
     ouverture: "battante",
     porteFenetre: true,
-    epaisseur: {
+    Ug: {
       1: 1.9,
       2: 2.8,
       3: 3.7,
@@ -629,7 +631,7 @@ const fenetres = [
     rupturePontThermique: false,
     ouverture: "coulissante",
     porteFenetre: true,
-    epaisseur: {
+    Ug: {
       1: 1.9,
       2: 2.8,
       3: 3.7,
@@ -676,7 +678,7 @@ const fenetres = [
     menuiserie: "PVC",
     ouverture: "battante",
     porteFenetre: false,
-    epaisseur: {
+    Ug: {
       1: 1.3,
       2: 2.1,
       3: 2.8,
@@ -723,7 +725,7 @@ const fenetres = [
     menuiserie: "PVC",
     ouverture: "coulissante",
     porteFenetre: false,
-    epaisseur: {
+    Ug: {
       1: 1.7,
       2: 2.4,
       3: 3.1,
@@ -771,7 +773,7 @@ const fenetres = [
     ouverture: "battante",
     porteFenetre: true,
     soubassement: false,
-    epaisseur: {
+    Ug: {
       1: 1.2,
       2: 2,
       3: 2.8,
@@ -819,7 +821,7 @@ const fenetres = [
     ouverture: "coulissante",
     porteFenetre: true,
     soubassement: false,
-    epaisseur: {
+    Ug: {
       1: 1.5,
       2: 2.3,
       3: 3.1,
@@ -867,7 +869,7 @@ const fenetres = [
     ouverture: "battante",
     porteFenetre: true,
     soubassement: true,
-    epaisseur: {
+    Ug: {
       1: 1.3,
       2: 2,
       3: 2.7,
@@ -914,7 +916,7 @@ const fenetres = [
     menuiserie: "bois",
     ouverture: "battante",
     porteFenetre: false,
-    epaisseur: {
+    Ug: {
       1: 1.5,
       2: 2.3,
       3: 3.1,
@@ -961,7 +963,7 @@ const fenetres = [
     menuiserie: "bois",
     ouverture: "coulissante",
     porteFenetre: false,
-    epaisseur: {
+    Ug: {
       1: 1.6,
       2: 2.4,
       3: 3.2,
@@ -1009,7 +1011,7 @@ const fenetres = [
     ouverture: "battante",
     porteFenetre: true,
     soubassement: false,
-    epaisseur: {
+    Ug: {
       1: 1.3,
       2: 2.2,
       3: 3,
@@ -1057,7 +1059,7 @@ const fenetres = [
     ouverture: "coulissante",
     porteFenetre: true,
     soubassement: false,
-    epaisseur: {
+    Ug: {
       1: 1.4,
       2: 2.3,
       3: 3.1,
@@ -1105,7 +1107,7 @@ const fenetres = [
     ouverture: "battante",
     porteFenetre: true,
     soubassement: true,
-    epaisseur: {
+    Ug: {
       1: 1.4,
       2: 2.1,
       3: 2.8,
@@ -1149,8 +1151,6 @@ const fenetres = [
     },
   },
 ];
-
-// fonctions pour le calcul des déperditions des fenêtres et portes fenêtres
 
 // fonction pour calculer l'epaisseur moyenne du triple vitrage
 //  La valeur retenue est egale ou juste inférieure aux valeurs suivantes: 6, 8, 10, 12, 14, 15, 16, 18, 20
@@ -1236,12 +1236,64 @@ function determineUg(
       default:
         output = 5.8;
     }
-    // console.log(`N° ${i++}`);
     console.log(output);
   });
   return output;
 }
 // fonction pour déterminer Uw (Ug, type de paroi, menuiserie)
+function determineUw(
+  menuiserie,
+  ouverture,
+  porteFenetre,
+  rupturePT,
+  soubassement,
+  Ug
+) {
+  let output = 0;
+  fenetres.forEach((fenetre) => {
+    console.log(fenetre);
+
+    switch (menuiserie) {
+      case "metal":
+        if (
+          fenetre.ouverture == ouverture &&
+          fenetre.porteFenetre == porteFenetre &&
+          fenetre.rupturePontThermique == rupturePT
+        ) {
+          output = fenetre.Ug[Ug];
+          erreurFenetre = false;
+        }
+        break;
+      case "PVC":
+        if (
+          fenetre.ouverture == ouverture &&
+          fenetre.porteFenetre == porteFenetre &&
+          fenetre.soubassement == soubassement
+        ) {
+          console.log(Ug[Ug]);
+          output = fenetre.Ug[Ug];
+          erreurFenetre = false;
+        }
+        break;
+      case "bois":
+        if (
+          fenetre.ouverture == ouverture &&
+          fenetre.porteFenetre == porteFenetre &&
+          fenetre.soubassement == soubassement
+        ) {
+          output = fenetre.Ug[Ug];
+          erreurFenetre = false;
+        }
+        break;
+
+      default:
+        output = 6.6;
+        break;
+    }
+    console.log(output);
+  });
+  return output;
+}
 // fonction pour déterminer Ujn (Uw, type de fermeture)
 // fonction pour déterminer U baie (Ujn ou Uw)
 
@@ -1256,7 +1308,13 @@ console.log(fenetres);
 console.log("------->");
 
 let rUg = determineUg("DV", "horizontal", "airSec", false, 6, null);
+let rUw = determineUw("metal", "coulissante", true, false, false, rUg);
 // contrôle fonction determineUg
 erreurVitrage == false
   ? console.log(`Ug =  ${rUg}`)
+  : console.log("vitrage absent de la base");
+
+// contrôle fonction determineUw
+erreurFenetre == false
+  ? console.log(`Uw = ${rUw}`)
   : console.log("fenêtre absente de la base");
