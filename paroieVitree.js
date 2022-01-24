@@ -1151,6 +1151,100 @@ const fenetres = [
     },
   },
 ];
+// base de données occultants;
+const occultants = [
+  {
+    id: 0,
+    descriptif: "Absence d'occultant",
+    DeltaR: 0,
+  },
+  {
+    id: 1,
+    descriptif: "Jalousie accordéon",
+    DeltaR: 0.08,
+  },
+  {
+    id: 2,
+    descriptif:
+      "Fermeture à lames orientables y compris les vénitiens extérieurs tout métal",
+    DeltaR: 0.08,
+  },
+  {
+    id: 3,
+    descriptif: "Volets battants avec ajours fixes",
+    DeltaR: 0.08,
+  },
+  {
+    id: 4,
+    descriptif: "Persiennes avec ajours fixes",
+    DeltaR: 0.08,
+  },
+  {
+    id: 5,
+    descriptif: "Fermeture sans ajours en position déployée",
+    DeltaR: 0.15,
+  },
+  {
+    id: 6,
+    descriptif: "volets roulants alu",
+    DeltaR: 0.15,
+  },
+  {
+    id: 7,
+    descriptif: "Volets roulants PVC (e ≤ 12 mm)",
+    DeltaR: 0.19,
+  },
+  {
+    id: 8,
+    descriptif: "Volets roulants PVC (e > 12 mm)",
+    DeltaR: 0.25,
+  },
+  {
+    id: 9,
+    descriptif: "Volets roulants bois (e ≤ 12 mm)",
+    DeltaR: 0.19,
+  },
+  {
+    id: 10,
+    descriptif: "Volets roulants bois (e > 12 mm)",
+    DeltaR: 0.25,
+  },
+  {
+    id: 11,
+    descriptif: "Volets battants PVC (e ≤ 22 mm)",
+    DeltaR: 0.19,
+  },
+  {
+    id: 12,
+    descriptif: "Volets battants PVC (e > 22 mm)",
+    DeltaR: 0.25,
+  },
+  {
+    id: 13,
+    descriptif: "Volets battants bois (e ≤ 22 mm)",
+    DeltaR: 0.19,
+  },
+  {
+    id: 14,
+    descriptif: "Volets battants bois (e > 22 mm)",
+    DeltaR: 0.25,
+  },
+  {
+    id: 4,
+    descriptif: "Persienne coulissante PVC ou bois (e ≤ 22 mm)",
+    DeltaR: 0.19,
+  },
+  {
+    id: 15,
+    descriptif: "Persienne coulissante PVC ou bois (e > 22 mm)",
+    DeltaR: 0.25,
+  },
+  {
+    id: 16,
+    descriptif: "Fermeture isolée sans ajours en position déployée",
+    DeltaR: 0.25,
+  },
+];
 
 // fonction pour calculer l'epaisseur moyenne du triple vitrage
 //  La valeur retenue est egale ou juste inférieure aux valeurs suivantes: 6, 8, 10, 12, 14, 15, 16, 18, 20
@@ -1251,7 +1345,7 @@ function determineUw(
 ) {
   let output = 0;
   fenetres.forEach((fenetre) => {
-    console.log(fenetre);
+    // console.log(fenetre);
 
     switch (menuiserie) {
       case "metal":
@@ -1290,7 +1384,7 @@ function determineUw(
         output = 6.6;
         break;
     }
-    console.log(output);
+    // console.log(output);
   });
   return output;
 }
@@ -1300,7 +1394,7 @@ function determineUwDF(Uw1, Uw2) {
   let output = 0;
   Uw1 == 0 || Uw2 == 0
     ? (output = 0)
-    : (output = Math.floor(10 / (1 / Uw1 + 1 / Uw2 + 0, 07)) / 10);
+    : (output = Math.floor(10 / (1 / Uw1 + 1 / Uw2 + 0.07)) / 10);
 
   return output;
 }
@@ -1317,6 +1411,8 @@ console.log("base de donnée vitrages :");
 console.log(vitrages);
 console.log("base de donnée fenêtres :");
 console.log(fenetres);
+console.log("base de donnée occultants :");
+console.log(occultants);
 console.log("------->");
 
 let rUg = determineUg("DV", "horizontal", "airSec", false, 6, null);
@@ -1332,4 +1428,5 @@ erreurFenetre == false
   : console.log("fenêtre absente de la base");
 
 // contrôle fonction determineUwDF
-UwDF = determineUwDF(1.2, 1.4);
+UwDF = determineUwDF(1.8, 6.6);
+console.log(`UwDV = ${UwDF}`);
