@@ -1,6 +1,8 @@
 let PVData;
+let erreurVitrage = true; // variable pour vérifier que le vitrage renseigné est présent dans la base de donnée
 
 // import des données de paroiVitreeData
+// base de données vitrages:
 
 const vitrages = [
   {
@@ -285,6 +287,7 @@ const vitrages = [
   },
 ];
 
+// base de données fenêtres:
 const fenetres = [
   {
     menuiserie: "metal",
@@ -1149,27 +1152,91 @@ const fenetres = [
 
 // fonctions pour le calcul des déperditions des fenêtres et portes fenêtres
 
+// fonction pour calculer l'epaisseur moyenne du triple vitrage
+//  La valeur retenue est egale ou juste inférieure aux valeurs suivantes: 6, 8, 10, 12, 14, 15, 16, 18, 20
+function epaisseurMoy(epaisseur1, epaisseur2) {
+  let result = Math.floor((epaisseur1 + epaisseur2) / 2);
+  console.log(result);
+  switch (result) {
+    case 7:
+      result = 6;
+      break;
+    case 9:
+      result = 8;
+      break;
+    case 11:
+      result = 10;
+      break;
+    case 13:
+      result = 12;
+      break;
+    case 17:
+      result = 16;
+      break;
+    case 19:
+      result = 18;
+      break;
+
+    default:
+      result = null;
+      break;
+  }
+  console.log(`epaisseur calculée: ${result}`);
+  return result;
+}
+
 // fonction pour déterminer Ug (type de vitrage)
-function determineUg(type, orientation, remplissage, VIR, epaisseur) {
-  //console.log(vitrage);
-  var output = 0;
-  let i = 0;
+//    type = 'SV', 'DV', 'TV'
+//    orientation = 'horizontal', 'vertical'
+//    remplissage = 'airSec', 'ArKr'
+//    VIR = true, false
+//    epaisseur1 = 6, 8, 10, 12, 14, 15, 16, 18, 20
+//    epaisseur2 = 6, 8, 10, 12, 14, 15, 16, 18, 20
+
+function determineUg(
+  type,
+  orientation,
+  remplissage,
+  VIR,
+  epaisseur1,
+  epaisseur2
+) {
+  let output = 0;
+
   vitrages.forEach((vitrage) => {
-    console.log(vitrage);
     switch (type) {
       case "SV":
-        vitrage.type == "SV" ? (output = vitrage.UgSV) : () => {};
+        if (vitrage.type == "SV") {
+          output = vitrage.UgSV;
+          erreurVitrage = false;
+        }
         break;
       case "DV":
-        output = 1;
+        if (
+          vitrage.type == "DV" &&
+          vitrage.orientation == orientation &&
+          vitrage.remplissage == remplissage &&
+          vitrage.VIR == VIR
+        ) {
+          output = vitrage.epaisseur[epaisseur1];
+          erreurVitrage = false;
+        }
         break;
       case "TV":
-        output = 2;
+        if (
+          vitrage.type == "TV" &&
+          vitrage.orientation == orientation &&
+          vitrage.remplissage == remplissage &&
+          vitrage.VIR == VIR
+        ) {
+          output = vitrage.epaisseur[epaisseurMoy(epaisseur1, epaisseur2)];
+          erreurVitrage = false;
+        }
         break;
       default:
         output = 5.8;
     }
-    console.log(`N° ${i++}`);
+    // console.log(`N° ${i++}`);
     console.log(output);
   });
   return output;
@@ -1181,8 +1248,15 @@ function determineUg(type, orientation, remplissage, VIR, epaisseur) {
 // export des données
 // export { vitrage, fenetre };
 
+// contrôle affichage bases de données
+console.log("base de donnée vitrages :");
 console.log(vitrages);
+console.log("base de donnée fenêtres :");
 console.log(fenetres);
 console.log("------->");
-let rUg = determineUg("DV", "", "", false, 10);
-console.log(rUg);
+
+let rUg = determineUg("DV", "horizontal", "airSec", false, 6, null);
+// contrôle fonction determineUg
+erreurVitrage == false
+  ? console.log(`Ug =  ${rUg}`)
+  : console.log("fenêtre absente de la base");
