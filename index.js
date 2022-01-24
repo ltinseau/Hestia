@@ -8,3 +8,8 @@ import * as Baie from "./DB/baie.js";
     ---> determineUp(nature, type)
 
 */
+
+import * as Mur from "./DB/mur.js";
+
+//console.log(2.3 == "2.3");
+//console.log(2.3 === "2.3");
