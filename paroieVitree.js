@@ -1150,7 +1150,7 @@ const fenetres = [
     },
   },
 ];
-// base de données occultants;
+// base de données occultants:
 const occultants = [
   {
     id: 0,
@@ -1502,6 +1502,75 @@ const occultantsResistances = [
     },
   },
 ];
+// base de données portes:
+const portes = [
+  {
+    id: 0,
+    nature: "Porte simple en bois ou PVC",
+    type: "Porte opaque pleine",
+    Up: 3.5,
+  },
+  {
+    id: 1,
+    nature: "Porte simple en bois ou PVC",
+    type: "Porte avec moins de 30% de vitrage simple",
+    Up: 4,
+  },
+  {
+    id: 2,
+    nature: "Porte simple en bois ou PVC",
+    type: "Porte avec 30-60% de vitrage simple",
+    Up: 4.5,
+  },
+  {
+    id: 3,
+    nature: "Porte simple en bois ou PVC",
+    type: "Porte avec double vitrage",
+    Up: 3.3,
+  },
+  {
+    id: 4,
+    nature: "Porte simple en métal",
+    type: "Porte opaque pleine",
+    Up: 5.8,
+  },
+  {
+    id: 5,
+    nature: "Porte simple en métal",
+    type: "Porte avec vitrage simple",
+    Up: 5.8,
+  },
+  {
+    id: 6,
+    nature: "Porte simple en métal",
+    type: "Porte avec moins de 30% de double vitrage",
+    Up: 5.5,
+  },
+  {
+    id: 7,
+    nature: "Porte simple en métal",
+    type: "Porte avec 30-60% de double vitrage",
+    Up: 4.8,
+  },
+  {
+    id: 8,
+    nature: "Toute menuiserie",
+    type: "Porte opaque pleine isolée",
+    Up: 1.5,
+  },
+  {
+    id: 9,
+    nature: "Toute menuiserie",
+    type: "Porte précédée d’un SAS",
+    Up: 1.5,
+  },
+  {
+    id: 10,
+    nature: "Toute menuiserie",
+    type: "Porte isolée avec double vitrage",
+    Up: 1.5,
+  },
+];
 // fonction pour calculer l'epaisseur moyenne du triple vitrage
 //  La valeur retenue est egale ou juste inférieure aux valeurs suivantes: 6, 8, 10, 12, 14, 15, 16, 18, 20
 function epaisseurMoy(epaisseur1, epaisseur2) {
@@ -1670,6 +1739,17 @@ function determineUjn(Uw, deltaR) {
 }
 // fonction pour déterminer U baie (Ujn ou Uw)
 
+// fonction pour déterminer Up (nature, type)
+function determineUp(nature, type) {
+  let output = 5.8;
+  portes.forEach((porte) => {
+    if (porte.nature == nature && porte.type == type) {
+      output = porte.Up;
+    }
+  });
+  return output;
+}
+
 // export des données
 // export { vitrage, fenetre };
 
@@ -1682,6 +1762,8 @@ console.log("base de donnée occultants :");
 console.log(occultants);
 console.log("base de donnée Resistance occultants :");
 console.log(occultantsResistances);
+console.log("base de donnée portes :");
+console.log(portes);
 console.log("------->");
 
 let rUg = determineUg("DV", "horizontal", "airSec", false, 6, null);
@@ -1708,3 +1790,7 @@ console.log(`DeltaR = ${deltaR}`);
 // contrôle fonction determineUjn
 let Ujn = determineUjn(rUw, deltaR);
 console.log(`Ujn = ${Ujn}`);
+
+// contrôle fonction determineUp
+let Up = determineUp("Toute menuiserie", "Porte opaque pleine isolée");
+console.log(`Up = ${Up}`);
