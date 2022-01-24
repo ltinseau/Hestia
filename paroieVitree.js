@@ -1294,7 +1294,19 @@ function determineUw(
   });
   return output;
 }
+
+// fonction pour déterminer Uw d'une double fenêtre
+function determineUwDF(Uw1, Uw2) {
+  let output = 0;
+  Uw1 == 0 || Uw2 == 0
+    ? (output = 0)
+    : (output = Math.floor(10 / (1 / Uw1 + 1 / Uw2 + 0, 07)) / 10);
+
+  return output;
+}
+
 // fonction pour déterminer Ujn (Uw, type de fermeture)
+
 // fonction pour déterminer U baie (Ujn ou Uw)
 
 // export des données
@@ -1318,3 +1330,6 @@ erreurVitrage == false
 erreurFenetre == false
   ? console.log(`Uw = ${rUw}`)
   : console.log("fenêtre absente de la base");
+
+// contrôle fonction determineUwDF
+UwDF = determineUwDF(1.2, 1.4);
