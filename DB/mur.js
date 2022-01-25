@@ -192,6 +192,64 @@ const murs = [
   },
   {
     id: 13,
+    type: "Murs en béton de mâchefer",
+    sousType: "",
+    Umur0: {
+      "≤ 20": 2.75,
+      25: 2.4,
+      28: 2.25,
+      30: 2.15,
+      35: 1.95,
+      40: 1.8,
+      22.5: 2.5,
+      "≥ 45": "-",
+    },
+  },
+  {
+    id: 14,
+    type: "Brique terre cuite alvéolaire",
+    sousType: "",
+    Umur0: {
+      30: 0.47,
+      37.5: 0.4,
+    },
+  },
+  {
+    id: 15,
+    type: "Mur en béton cellulaire",
+    sousType: "Construction < 2013",
+    Umur0: {
+      15: 0.9,
+      20: 0.7,
+      25: 0.57,
+      30: 0.49,
+      35: 0.42,
+      17.5: 0.79,
+      22.5: 0.63,
+      27.5: 0.53,
+      32.5: 0.45,
+      37.5: 0.4,
+    },
+  },
+  {
+    id: 16,
+    type: "Mur en béton cellulaire",
+    sousType: "Construction ≥ 2013",
+    Umur0: {
+      15: 0.69,
+      20: 0.53,
+      25: 0.43,
+      30: 0.36,
+      35: 0.28,
+      17.5: 0.6,
+      22.5: 0.48,
+      27.5: 0.4,
+      32.5: 0.3,
+      37.5: 0.22,
+    },
+  },
+  {
+    id: 17,
     type: "Murs sandwich béton/isolant/béton (sans isolation rapportée)",
     sousType: "",
     Umur0: {
@@ -201,7 +259,7 @@ const murs = [
     },
   },
   {
-    id: 14,
+    id: 18,
     type: "Murs en ossature bois (sans isolation rapportée)",
     sousType: "",
     Umur0: {
@@ -216,7 +274,7 @@ const murs = [
     },
   },
   {
-    id: 15,
+    id: 19,
     type: "Cloison de plâtre",
     sousType: "",
     Umur0: {
@@ -235,6 +293,26 @@ function determineUmur0(id, epaisseur, enduit) {
   return output;
 }
 
+// fonction pour déterminer le Risolant en fonction de l'année de construction ou de rénovation (année, zone cimatique, effet joule)
+
+// fonction pour calculer Umur avec isolation (Umur0, rIsolant, epIsolant, anIsolant). Si les valeurs ne sont pas renseignées ou connues, elles devront être mises à 0.
+function determineUmur(Umur0, rIsolant, epIsolant, anIsolant) {
+  let output = Umur0;
+  console.log(`verif du test sur Risolant : ${rIsolant !== 0}`);
+  if (rIsolant !== 0) {
+    output = Math.round(100 / (1 / Umur0 + rIsolant)) / 100;
+    console.log("calcul par R");
+  } else if (epIsolant !== 0) {
+    output = Math.round(100 / (1 / Umur0 + epIsolant / 0.04)) / 100;
+    console.log("calcul par ep");
+  } else {
+    /* fonction pour donner Risolant avec l'année de contruction*/
+    console.log("calcul par AC");
+  }
+
+  return output;
+}
+
 /*---------------------------------------*/
 // contrôle affichage bases de données
 console.log("base de données murs :");
@@ -242,8 +320,22 @@ console.log(murs);
 console.log(murs[4].Umur0[18]);
 
 // contrôle fonction determineUmur0
-let Umur0 = determineUmur0(0, 60, true);
+let Umur0 = determineUmur0(16, 20, false);
 console.log(`Umur0 = ${Umur0}`);
+
+// contrôle fonction determineUmur
+let Ris = 3.5;
+let EpIs = 0.1;
+let AC = 1990;
+let Umur = determineUmur(Umur0, Ris, EpIs, AC);
+console.log(`Pour une isolation R= ${Ris}: Umur = ${Umur}`);
+console.log(`Pour une isolation R = 4.5: Umur = ${determineUmur(Umur0, 4.5)}`);
+console.log(
+  `Pour une isolation ep = ${EpIs}: Umur = ${determineUmur(Umur0, 0, EpIs)}`
+);
+console.log(
+  `Pour une isolation année= ${AC}: Umur = ${determineUmur(Umur0, 0, 0, AC)}`
+);
 
 /*---------------------------------------*/
 export {};

@@ -13,3 +13,5 @@ import * as Mur from "./DB/mur.js";
 
 //console.log(2.3 == "2.3");
 //console.log(2.3 === "2.3");
+
+let anneeConstruction = 1980;
