@@ -282,6 +282,93 @@ const murs = [
     },
   },
 ];
+// données Résistance thermique des isolations selon l'année de construction ou rénovation
+const isolations = [
+  {
+    zoneClimatique: "H1",
+    effetJoule: true,
+    Risolant: {
+      "avant 1974 ou inconnu": 2.5,
+      "1975-1977": 1,
+      "1978-1982": 0.8,
+      "1983-1988": 0.7,
+      "1989-2000": 0.45,
+      "2001-2005": 0.4,
+      "2006-2012": 0.36,
+      "après 2013": 0.23,
+    },
+  },
+  {
+    zoneClimatique: "H1",
+    effetJoule: false,
+    Risolant: {
+      "avant 1974 ou inconnu": 2.5,
+      "1975-1977": 1,
+      "1978-1982": 1,
+      "1983-1988": 0.8,
+      "1989-2000": 0.5,
+      "2001-2005": 0.4,
+      "2006-2012": 0.36,
+      "après 2013": 0.23,
+    },
+  },
+  {
+    zoneClimatique: "H2",
+    effetJoule: true,
+    Risolant: {
+      "avant 1974 ou inconnu": 2.5,
+      "1975-1977": 1.05,
+      "1978-1982": 0.84,
+      "1983-1988": 0.74,
+      "1989-2000": 0.47,
+      "2001-2005": 0.4,
+      "2006-2012": 0.36,
+      "après 2013": 0.23,
+    },
+  },
+  {
+    zoneClimatique: "H2",
+    effetJoule: false,
+    Risolant: {
+      "avant 1974 ou inconnu": 2.5,
+      "1975-1977": 1.05,
+      "1978-1982": 1.05,
+      "1983-1988": 0.84,
+      "1989-2000": 0.53,
+      "2001-2005": 0.4,
+      "2006-2012": 0.36,
+      "après 2013": 0.23,
+    },
+  },
+  {
+    zoneClimatique: "H3",
+    effetJoule: true,
+    Risolant: {
+      "avant 1974 ou inconnu": 2.5,
+      "1975-1977": 1.11,
+      "1978-1982": 0.89,
+      "1983-1988": 0.78,
+      "1989-2000": 0.5,
+      "2001-2005": 0.47,
+      "2006-2012": 0.4,
+      "après 2013": 0.25,
+    },
+  },
+  {
+    zoneClimatique: "H3",
+    effetJoule: false,
+    Risolant: {
+      "avant 1974 ou inconnu": 2.5,
+      "1975-1977": 1.11,
+      "1978-1982": 1.11,
+      "1983-1988": 0.89,
+      "1989-2000": 0.56,
+      "2001-2005": 0.47,
+      "2006-2012": 0.4,
+      "après 2013": 0.25,
+    },
+  },
+];
 
 // fonction pour déterminer Umur0 (id, epaisseur, enduit)
 function determineUmur0(id, epaisseur, enduit) {
@@ -294,6 +381,40 @@ function determineUmur0(id, epaisseur, enduit) {
 }
 
 // fonction pour déterminer le Risolant en fonction de l'année de construction ou de rénovation (année, zone cimatique, effet joule)
+function determineRisolant(connue, annee, zoneClimatique, effetJoule) {
+  let output = 2.5;
+  let plageAnnee = "avant 1974 ou inconnu";
+  let zoneClimAbr = "";
+  // on détermine la plage d'année de construction ou rénovation:
+  if (connue) {
+  
+  }
+  
+  // plageAnnee = "1975-1977";
+  // on détermine la zone climatique H1, H2 ou H3:
+  switch (zoneClimatique) {
+    case "H1a":
+    case "H1b":
+    case "H1c":
+      zoneClimAbr = "H1";
+      break;
+    case "H2a":
+    case "H2b":
+    case "H2c":
+    case "H2d":
+      zoneClimAbr = "H2";
+      break;
+    default:
+      zoneClimAbr = "H3";
+      break;
+  }
+  isolations.forEach((isolation) => {
+    if (isolation.annee == plageAnnee && isolation.effetJoule == effetJoule) {
+      output = isolation.Risolant[plageAnnee];
+    }
+  });
+  return output;
+}
 
 // fonction pour calculer Umur avec isolation (Umur0, rIsolant, epIsolant, anIsolant). Si les valeurs ne sont pas renseignées ou connues, elles devront être mises à 0.
 function determineUmur(Umur0, rIsolant, epIsolant, anIsolant) {
