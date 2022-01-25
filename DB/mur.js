@@ -445,9 +445,9 @@ function determineRisolant(
 }
 
 // fonction pour calculer Umur avec isolation (Umur0, rIsolant, epIsolant, anIsolant). Si les valeurs ne sont pas renseignées ou connues, elles devront être mises à 0.
-function determineUmur(Umur0, rIsolant, epIsolant, anIsolant) {
+function determineUmur(Umur0, rIsolant, epIsolant, anConstruction, anIsolant) {
   let output = Umur0;
-  console.log(`verif du test sur Risolant : ${rIsolant !== 0}`);
+
   if (rIsolant !== 0) {
     output = Math.round(100 / (1 / Umur0 + rIsolant)) / 100;
     console.log("calcul par R");
@@ -456,6 +456,13 @@ function determineUmur(Umur0, rIsolant, epIsolant, anIsolant) {
     console.log("calcul par ep");
   } else {
     /* fonction pour donner Risolant avec l'année de contruction*/
+    output = determineRisolant(
+      zoneClimatique,
+      effetJoule,
+      anConstruction,
+      anIsolConnue,
+      anIsolant
+    );
     console.log("calcul par AC");
   }
 
@@ -463,38 +470,48 @@ function determineUmur(Umur0, rIsolant, epIsolant, anIsolant) {
 }
 
 /*---------------------------------------*/
-// contrôle affichage bases de données
-console.log("base de données murs :");
-console.log(murs);
-console.log(murs[4].Umur0[18]);
+// // contrôle affichage bases de données
+// console.log("base de données murs :");
+// console.log(murs);
+// console.log(murs[4].Umur0[18]);
 
-// contrôle fonction determineUmur0
-let Umur0 = determineUmur0(16, 20, false);
-console.log(`Umur0 = ${Umur0}`);
+// // contrôle fonction determineUmur0
+// let Umur0 = determineUmur0(16, 20, false);
+// console.log(`Umur0 = ${Umur0}`);
 
-// contrôle fonction determineUmur
-let Ris = 3.5;
-let EpIs = 0.1;
-let AC = 1978;
-let Umur = determineUmur(Umur0, Ris, EpIs, AC);
-console.log(`Pour une isolation R= ${Ris}: Umur = ${Umur}`);
-console.log(`Pour une isolation R = 4.5: Umur = ${determineUmur(Umur0, 4.5)}`);
-console.log(
-  `Pour une isolation ep = ${EpIs}: Umur = ${determineUmur(Umur0, 0, EpIs)}`
-);
-console.log(
-  `Pour une isolation année= ${AC}: Umur = ${determineRisolant(
-    "H3",
-    true,
-    AC,
-    true,
-    2000
-  )}`
-);
+// // contrôle fonction determineUmur
+// let zoneClimatique = "H2c";
+// let effetJoule = true;
+// let anIsolConnue = true;
+// let Ris = 3.5;
+// let EpIs = 0.1;
+// let AC = 1956;
+// let AI = 1978;
+// let Umur = determineUmur(Umur0, Ris, EpIs, AC, AI);
+// console.log(`Pour une isolation R= ${Ris}: Umur = ${Umur}`);
+// console.log(`Pour une isolation R = 4.5: Umur = ${determineUmur(Umur0, 4.5)}`);
+// console.log(
+//   `Pour une isolation ep = ${EpIs}: Umur = ${determineUmur(Umur0, 0, EpIs)}`
+// );
+// console.log(
+//   `Pour une isolation année= ${AI}: Umur = ${determineUmur(
+//     Umur0,
+//     0,
+//     0,
+//     AC,
+//     AI
+//   )}`
+// );
 
-// contrôle fonction determineRisolant
-let Risolant = determineRisolant("H3", true, 1967, true, 1978);
-console.log(Risolant);
+// // contrôle fonction determineRisolan"H3"t
+// let Risolant = determineRisolant(
+//   zoneClimatique,
+//   effetJoule,
+//   AC,
+//   anIsolConnue,
+//   AI
+// );
+// console.log(Risolant);
 
 /*---------------------------------------*/
-export {};
+export { determineUmur0, determineRisolant, determineUmur };
