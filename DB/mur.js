@@ -383,10 +383,10 @@ function determineUmur0(id, epaisseur, enduit) {
 // fonction pour déterminer le Risolant en fonction de l'année de construction ou de rénovation (année, zone cimatique, effet joule)
 function determineRisolant(
   zoneClimatique,
+  effetJoule,
   anConstruction,
   anIsolationConnue,
-  anIsolation,
-  effetJoule
+  anIsolation
 ) {
   let output = 2.5;
   let plageAnnee = "avant 1974 ou inconnu";
@@ -475,7 +475,7 @@ console.log(`Umur0 = ${Umur0}`);
 // contrôle fonction determineUmur
 let Ris = 3.5;
 let EpIs = 0.1;
-let AC = 1990;
+let AC = 1978;
 let Umur = determineUmur(Umur0, Ris, EpIs, AC);
 console.log(`Pour une isolation R= ${Ris}: Umur = ${Umur}`);
 console.log(`Pour une isolation R = 4.5: Umur = ${determineUmur(Umur0, 4.5)}`);
@@ -483,11 +483,17 @@ console.log(
   `Pour une isolation ep = ${EpIs}: Umur = ${determineUmur(Umur0, 0, EpIs)}`
 );
 console.log(
-  `Pour une isolation année= ${AC}: Umur = ${determineUmur(Umur0, 0, 0, AC)}`
+  `Pour une isolation année= ${AC}: Umur = ${determineRisolant(
+    "H3",
+    true,
+    AC,
+    true,
+    2000
+  )}`
 );
 
 // contrôle fonction determineRisolant
-let Risolant = determineRisolant("H2c", 1940, true, 2000, true);
+let Risolant = determineRisolant("H3", true, 1967, true, 1978);
 console.log(Risolant);
 
 /*---------------------------------------*/
