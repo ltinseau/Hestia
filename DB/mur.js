@@ -381,16 +381,40 @@ function determineUmur0(id, epaisseur, enduit) {
 }
 
 // fonction pour déterminer le Risolant en fonction de l'année de construction ou de rénovation (année, zone cimatique, effet joule)
-function determineRisolant(connue, annee, zoneClimatique, effetJoule) {
+function determineRisolant(
+  zoneClimatique,
+  anConstruction,
+  anIsolationConnue,
+  anIsolation,
+  effetJoule
+) {
   let output = 2.5;
   let plageAnnee = "avant 1974 ou inconnu";
-  let zoneClimAbr = "";
+  let zoneClimAbr;
   // on détermine la plage d'année de construction ou rénovation:
-  if (connue) {
-  
+  if (!anIsolationConnue && anConstruction <= 1974) {
+    plageAnnee = "1975-1977";
+  } else {
+    if (!anIsolationConnue) {
+      anIsolation = anConstruction;
+    }
+    if (anIsolation <= 1974) {
+      plageAnnee = "avant 1974 ou inconnu";
+    } else if (anIsolation <= 1977) {
+      plageAnnee = "1975-1977";
+    } else if (anIsolation <= 1982) {
+      plageAnnee = "1978-1982";
+    } else if (anIsolation <= 1988) {
+      plageAnnee = "1983-1988";
+    } else if (anIsolation <= 2000) {
+      plageAnnee = "1989-2000";
+    } else if (anIsolation <= 2005) {
+      plageAnnee = "2001-2005";
+    } else if (anIsolation <= 2013) {
+      plageAnnee = "après 2013";
+    }
   }
-  
-  // plageAnnee = "1975-1977";
+  console.log(`plageAnnée : ${plageAnnee}`);
   // on détermine la zone climatique H1, H2 ou H3:
   switch (zoneClimatique) {
     case "H1a":
@@ -408,8 +432,12 @@ function determineRisolant(connue, annee, zoneClimatique, effetJoule) {
       zoneClimAbr = "H3";
       break;
   }
+  console.log(`zone climatique abrégée: ${zoneClimAbr}`);
   isolations.forEach((isolation) => {
-    if (isolation.annee == plageAnnee && isolation.effetJoule == effetJoule) {
+    if (
+      isolation.zoneClimatique == zoneClimAbr &&
+      isolation.effetJoule == effetJoule
+    ) {
       output = isolation.Risolant[plageAnnee];
     }
   });
@@ -457,6 +485,10 @@ console.log(
 console.log(
   `Pour une isolation année= ${AC}: Umur = ${determineUmur(Umur0, 0, 0, AC)}`
 );
+
+// contrôle fonction determineRisolant
+let Risolant = determineRisolant("H2c", 1940, true, 2000, true);
+console.log(Risolant);
 
 /*---------------------------------------*/
 export {};
