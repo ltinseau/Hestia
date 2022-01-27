@@ -1,20 +1,95 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap"); */
+
+@font-face {
+  font-family: "font-regular";
+  src: url(./assets/Montserrat-Regular.otf) format("opentype"),
+    url(./assets/Montserrat-Regular.ttf) format("truetype"),
+    url(./assets/montserrat-regular.woff) format("woff"),
+    url(./assets/montserrat-regular.woff2) format("woff2");
+}
+
+element {
+  --main-bg-color: brown;
+  --color-1: #1c4d92;
+  --color-2: #0093c4;
+  --color-3: #646d77;
+  --color-4: #2a2f30;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   list-style-type: none;
-  font-family: "Montserrat", sans-serif;
-  text-align: center;
+  text-align: left;
+  border: 1px solid brown;
 }
 
 body {
-  background: #abbffd;
+  background: whitesmoke;
+  height: 100vh;
+  font-family: "font-regular", sans-serif;
+  margin: 20px;
+}
+header {
+  display: grid;
+  grid-template-columns: 80% 20%;
+  background-color: #1c4d92;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 20px;
 }
 h1 {
-  font-size: 2.2rem;
-  letter-spacing: 2px;
-  margin: 25px 0 25px;
-  color: blue;
+  /* text-transform: uppercase; */
+  font-size: 2rem;
+  /* letter-spacing: 2px; */
+  /* margin: 25px 0 25px; */
+  color: whitesmoke;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo {
+  display: flex;
+  align-items: right;
+  justify-content: center;
+}
+main {
+  display: grid;
+  grid-template-columns: 15% 65% 20%;
+
+  height: 80%;
+}
+nav {
+  font-weight: bold;
+  font-size: 1.1rem;
+  background-color: floralwhite;
+  border: 1px solid cornflowerblue;
+  border-radius: 20px;
+  margin: 10px;
+  padding: 20px;
+}
+section {
+  background-color: whitesmoke;
+  border: 1px solid cornflowerblue;
+  border-radius: 20px;
+  margin: 10px;
+  padding: 20px;
+  position: relative;
+}
+aside {
+  background-color: whitesmoke;
+  border: 1px solid cornflowerblue;
+  border-radius: 20px;
+  margin: 10px;
+  padding: 20px;
+  position: relative;
+}
+footer {
+  margin: 10px;
+  padding: 10px;
+  font-size: 0.8rem;
 }
 
 @media screen and (max-width: 510px) {
