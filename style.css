@@ -8,7 +8,7 @@
     url(./assets/montserrat-regular.woff2) format("woff2");
 }
 
-element {
+:root {
   --main-bg-color: brown;
   --color-1: #1c4d92;
   --color-2: #0093c4;
@@ -22,22 +22,20 @@ element {
   box-sizing: border-box;
   list-style-type: none;
   text-align: left;
-  border: 1px solid brown;
+  /* border: 1px solid brown; */
 }
 
 body {
   background: whitesmoke;
   height: 100vh;
   font-family: "font-regular", sans-serif;
-  margin: 20px;
 }
 header {
   display: grid;
   grid-template-columns: 80% 20%;
-  background-color: #1c4d92;
-  padding: 20px;
-  margin: 10px;
-  border-radius: 20px;
+  background-color: var(--color-1);
+  padding: 10px;
+  height: 15vh;
 }
 h1 {
   /* text-transform: uppercase; */
@@ -58,8 +56,7 @@ h1 {
 main {
   display: grid;
   grid-template-columns: 15% 65% 20%;
-
-  height: 80%;
+  height: 80vh;
 }
 nav {
   font-weight: bold;
@@ -67,14 +64,14 @@ nav {
   background-color: floralwhite;
   border: 1px solid cornflowerblue;
   border-radius: 20px;
-  margin: 10px;
+  margin: 20px;
   padding: 20px;
 }
 section {
   background-color: whitesmoke;
   border: 1px solid cornflowerblue;
   border-radius: 20px;
-  margin: 10px;
+  margin: 20px;
   padding: 20px;
   position: relative;
 }
@@ -82,13 +79,16 @@ aside {
   background-color: whitesmoke;
   border: 1px solid cornflowerblue;
   border-radius: 20px;
-  margin: 10px;
+  margin: 20px;
   padding: 20px;
   position: relative;
 }
 footer {
-  margin: 10px;
-  padding: 10px;
+  background-color: var(--color-3);
+  width: 100%;
+  height: 5vh;
+  /* margin: 10px;
+  padding: 10px; */
   font-size: 0.8rem;
 }
 
