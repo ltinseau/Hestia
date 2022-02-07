@@ -64,4 +64,5 @@
   font-weight: bold;
   font-size: 1.6rem;
   position: absolute;
+  transform: translateX(-7px) translateY(-2px);
 }

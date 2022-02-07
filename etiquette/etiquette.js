@@ -19,37 +19,37 @@ function setLabelSize(DPE_rating) {
     DPE_size = DPE_size_init;
   } else if (DPE_rating <= 70) {
     DPE_size[0][0] += 5;
-    DPE_size[0][1] = 62;
+    DPE_size[0][1] = 68;
     for (i = 1; i <= 6; i++) {
       DPE_size[i][0] += 10;
     }
   } else if (DPE_rating <= 110) {
     DPE_size[1][0] += 5;
-    DPE_size[1][1] = 62;
+    DPE_size[1][1] = 68;
     for (i = 2; i <= 6; i++) {
       DPE_size[i][0] += 10;
     }
   } else if (DPE_rating <= 180) {
     DPE_size[2][0] += 5;
-    DPE_size[2][1] = 62;
+    DPE_size[2][1] = 68;
     for (i = 3; i <= 6; i++) {
       DPE_size[i][0] += 10;
     }
   } else if (DPE_rating <= 250) {
     DPE_size[3][0] += 5;
-    DPE_size[3][1] = 62;
+    DPE_size[3][1] = 68;
     for (i = 4; i <= 6; i++) {
       DPE_size[i][0] += 10;
     }
   } else if (DPE_rating <= 330) {
     DPE_size[4][0] += 5;
-    DPE_size[4][1] = 62;
+    DPE_size[4][1] = 68;
     for (i = 5; i <= 6; i++) {
       DPE_size[i][0] += 11;
     }
   } else if (DPE_rating <= 420) {
     DPE_size[5][0] += 5;
-    DPE_size[5][1] = 62;
+    DPE_size[5][1] = 68;
     for (i = 6; i <= 6; i++) {
       DPE_size[i][0] += 11;
     }
@@ -74,7 +74,7 @@ function DPE_labelDisplay() {
         ${level[0]}px ${level[1] / 2}px, 
         ${level[0] - level[1] / 3 - 1}px ${level[1]}px, 
         0px ${level[1]}px);
-    background-color: rgba(0, 0, 0, 0.85);
+    background-color: rgba(0, 0, 0, 0.9);
     width: ${level[0]}px;
     height: ${level[1]}px;
     z-index: 1;
@@ -87,7 +87,7 @@ function DPE_labelDisplay() {
       ${level[0] - level[1] / 3 - 11}px ${level[1]}px, 
       0px ${level[1]}px);
     background-color: var(${level[2]}) ;
-  transform: translateX(-7px) translateY();
+  
   width: ${level[0]}px;
   height: ${level[1] - 8}px;
   z-index: 2;
