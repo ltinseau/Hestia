@@ -37,9 +37,7 @@
   align-items: flex-start;
   align-content: stretch;
 }
-
 .DPE_label li {
-  background-color: var(--color-DPE1);
   margin-top: 3px;
   display: flex;
   align-items: center;
@@ -53,5 +51,17 @@
   font-family: Helvetica, sans-serif;
   font-weight: bold;
   font-size: 1.6rem;
-  border: 2px solid black;
+}
+.DPE_label_polygon {
+  margin-top: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  color: white;
+  text-transform: uppercase;
+  padding-left: 10px;
+  font-family: Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 1.6rem;
+  position: absolute;
 }

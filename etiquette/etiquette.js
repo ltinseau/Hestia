@@ -67,16 +67,34 @@ function DPE_labelDisplay() {
   let id = 0;
   document.querySelector(".DPE_label").innerHTML = setLabelSize(DPE_rating)
     .map(
-      (level) => `<li style="
-    clip-path: polygon(0% 0%, 
+      (level) => `<li id= "DPE_polygon_${level[3]}" style="
+      clip-path: polygon(
+        0px 0px, 
         ${level[0] - level[1] / 3 - 1}px 0px, 
         ${level[0]}px ${level[1] / 2}px, 
         ${level[0] - level[1] / 3 - 1}px ${level[1]}px, 
         0px ${level[1]}px);
-    background-color: var(${level[2]});
+    background-color: rgba(0, 0, 0, 0.85);
     width: ${level[0]}px;
     height: ${level[1]}px;
-  "> ${level[3]} </li>`
+    z-index: 1;
+    
+  ">${level[3]}<div class="DPE_label_polygon" style="
+  clip-path: polygon(
+      0% 0%, 
+      ${level[0] - level[1] / 3 - 6}px 0px, 
+      ${level[0] - 8}px ${level[1] / 2 - 4}px, 
+      ${level[0] - level[1] / 3 - 11}px ${level[1]}px, 
+      0px ${level[1]}px);
+    background-color: var(${level[2]}) ;
+  transform: translateX(-7px) translateY();
+  width: ${level[0]}px;
+  height: ${level[1] - 8}px;
+  z-index: 2;
+ 
+">${level[3]}</div>  
+    
+  </li>`
     )
     .join("");
 }
