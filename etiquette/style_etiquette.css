@@ -1,13 +1,13 @@
 :root {
   --main-bg-color: white;
   --bg-text: #00a47a;
-  --color-DPE1: #009c6d;
-  --color-DPE2: #52b153;
-  --color-DPE3: #78bd76;
-  --color-DPE4: #f4e70f;
-  --color-DPE5: #f0b50f;
-  --color-DPE6: #eb8235;
-  --color-DPE7: #d7221f;
+  --color-DPE1: rgb(0, 156, 109);
+  --color-DPE2: rgb(82, 177, 83);
+  --color-DPE3: rgb(120, 189, 118);
+  --color-DPE4: rgb(244, 231, 15);
+  --color-DPE5: rgb(240, 181, 15);
+  --color-DPE6: rgb(235, 130, 53);
+  --color-DPE7: rgb(215, 34, 31);
   --color-GES1: #a4dbf8;
   --color-GES2: #8cb4d3;
   --color-GES3: #7792b1;
@@ -65,4 +65,7 @@
   font-size: 1.6rem;
   position: absolute;
   transform: translateX(-7px) translateY(-2px);
+}
+canvas {
+  border: 1px black solid;
 }
