@@ -28,6 +28,9 @@ const DPE_label_pos = [0, 0, 288, 288];
 
 const DPE_rating = 270;
 
+let padX = 100;
+let padY = 50;
+
 // function setLabelSize(DPE_rating) {
 //   let DPE_size = DPE_size_init;
 //   if (DPE_rating == null) {
@@ -160,29 +163,27 @@ function set_DPE_label_position(DPE_rating) {
           [DPE_label_pos[0], labelHeight], //pt E
         ])
       : (labelPos[i] = [
-          [DPE_label_pos[0], DPE_label_pos[1]], //pt A
+          [DPE_label_pos[0], DPE_label_pos[1] + labelPos[i - 1][3][1] + 3], //pt A
           [
-            labelPos[i - 1][1][0] +
-              (labelHeight / 2 +
-                (labelPos[i - 1][4][1] - labelPos[i - 1][0][1]) / 2) *
+            labelPos[i - 1][2][0] +
+              ((labelPos[i - 1][4][1] - labelPos[i - 1][0][1]) / 2) *
                 Math.tan((36 * Math.PI) / 180),
-            DPE_label_pos[1],
+            DPE_label_pos[1] + labelPos[i - 1][3][1] + 3,
           ], //pt B
           [
             labelPos[i - 1][2][0] +
               (labelHeight / 2 +
                 (labelPos[i - 1][4][1] - labelPos[i - 1][0][1]) / 2) *
                 Math.tan((36 * Math.PI) / 180),
-            labelHeight / 2,
+            labelHeight / 2 + labelPos[i - 1][3][1] + 3,
           ], //pt C
           [
-            labelPos[i - 1][3][0] +
-              (labelHeight / 2 +
-                (labelPos[i - 1][4][1] - labelPos[i - 1][0][1]) / 2) *
+            labelPos[i - 1][2][0] +
+              ((labelPos[i - 1][4][1] - labelPos[i - 1][0][1]) / 2) *
                 Math.tan((36 * Math.PI) / 180),
-            labelHeight,
+            labelHeight + labelPos[i - 1][3][1] + 3,
           ], //pt D
-          [DPE_label_pos[0], labelHeight], //pt E
+          [DPE_label_pos[0], labelHeight + labelPos[i - 1][3][1] + 3], //pt E
         ]);
   }
   return labelPos;
@@ -190,32 +191,52 @@ function set_DPE_label_position(DPE_rating) {
 
 // fonction qui dessine un polygone (coordonnées)
 function draw_DPE_polygon(label_pos, color) {
-  let tab = new Array();
-  tab = label_pos;
   const DPEcvs = document.getElementById("DPEcvs");
+
   ctx = DPEcvs.getContext("2d");
   ctx.fillStyle = color;
-  ctx.fillRect(
-    label_pos[0][0],
-    label_pos[0][1],
-    label_pos[3][0],
-    label_pos[3][1]
-  );
+  ctx.beginPath();
+  ctx.moveTo(padX + label_pos[0][0], padY + label_pos[0][1]);
+  ctx.lineTo(padX + label_pos[1][0], padY + label_pos[1][1]);
+  ctx.lineTo(padX + label_pos[2][0], padY + label_pos[2][1]);
+  ctx.lineTo(padX + label_pos[3][0], padY + label_pos[3][1]);
+  ctx.lineTo(padX + label_pos[4][0], padY + label_pos[4][1]);
+  ctx.fill();
+}
+
+// fonction qui trace le contour du polygone (DPE Rating)
+function draw_DPE_stroke(label_pos, index, rating) {
+  let classDPE = set_class_DPE(rating)[1];
+
+  if (index == classDPE) {
+    console.log("test: " + classDPE);
+    const DPEcvs = document.getElementById("DPEcvs");
+    ctx = DPEcvs.getContext("2d");
+    ctx.fillStyle = "rga(0,0,0,0.9";
+    ctx.beginPath();
+    ctx.moveTo(padX + label_pos[0][0], padY + label_pos[0][1]);
+    ctx.lineTo(padX + label_pos[1][0], padY + label_pos[1][1]);
+    ctx.lineTo(padX + label_pos[2][0], padY + label_pos[2][1]);
+    ctx.lineTo(padX + label_pos[3][0], padY + label_pos[3][1]);
+    ctx.lineTo(padX + label_pos[4][0], padY + label_pos[4][1]);
+    ctx.lineTo(padX + label_pos[0][0], padY + label_pos[0][1]);
+    ctx.stroke();
+  }
 }
 
 // fonction qui trace toute l'étiquette (DPE-rating)
 function DPE_labelDisplay(DPE_rating) {
+  let positions = new Array();
+  positions = set_DPE_label_position(DPE_rating);
   for (i = 0; i <= 6; i++) {
-    draw_DPE_polygon(set_DPE_label_position(DPE_rating, `${labelColors[i]}`));
+    console.log("position = " + positions[i]);
+    draw_DPE_polygon(positions[i], `${labelColors[i]}`);
+    draw_DPE_stroke(positions[i], i, DPE_rating);
   }
 }
 
-//
-
-const label_pos_test = set_DPE_label_position(DPE_rating)[4];
-console.log(label_pos_test);
-draw_DPE_polygon(label_pos_test, labelColors[4]);
-DPE_labelDisplay(DPE_rating);
+window.addEventListener("load", DPE_labelDisplay(DPE_rating));
 
 // console.log(set_class_DPE(500));
 console.log(set_DPE_label_position(DPE_rating));
+console.log(draw_DPE_stroke(DPE_rating));
