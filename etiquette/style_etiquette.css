@@ -16,6 +16,7 @@
   --color-GES6: #4d5271;
   --color-GES7: #281b35;
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -69,4 +70,16 @@
 }
 canvas {
   border: 1px black solid;
+}
+.DPE_label_small {
+  width: 300;
+  height: 300;
+}
+.DPE_label_medium {
+  width: 600;
+  height: 600;
+}
+.DPE_label_large {
+  width: 1024;
+  height: 1024;
 }
