@@ -138,17 +138,23 @@ function draw_DPE_stroke(label_pos, index, rating) {
       // rectangle pour le texte:
       ctx.moveTo(padX + label_pos[0][0], padY + label_pos[0][1]);
       ctx.lineTo(
-        padX + label_pos[0][0] - 0.56 * DPEgraphWidth - 3,
+        padX + label_pos[0][0] - 0.56 * DPEgraphWidth + 8,
         padY + label_pos[0][1]
       );
       ctx.quadraticCurveTo(
         padX + label_pos[0][0] - 0.56 * DPEgraphWidth,
-        y + hauteur,
-        padX + label_pos[0][0] - 0.56 * DPEgraphWidth + 3,
-        y + hauteur
+        padY + label_pos[0][1],
+        padX + label_pos[0][0] - 0.56 * DPEgraphWidth,
+        padY + label_pos[0][1] + 8
       );
       ctx.lineTo(
         padX + label_pos[0][0] - 0.56 * DPEgraphWidth,
+        padY + label_pos[4][1] - 8
+      );
+      ctx.quadraticCurveTo(
+        padX + label_pos[0][0] - 0.56 * DPEgraphWidth,
+        padY + label_pos[4][1],
+        padX + label_pos[0][0] - 0.56 * DPEgraphWidth + 8,
         padY + label_pos[4][1]
       );
       ctx.lineTo(padX + label_pos[0][0], padY + label_pos[4][1]);
