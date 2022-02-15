@@ -1,5 +1,5 @@
 :root {
-  --main-bg-color: white;
+  --main-bg-color: rgb(25, 78, 146);
   --bg-text: #00a47a;
   --color-DPE1: rgb(0, 156, 109);
   --color-DPE2: rgb(82, 177, 83);
@@ -16,6 +16,9 @@
   --color-GES6: #4d5271;
   --color-GES7: #281b35;
 }
+body {
+  background-color: var(--main-bg-color);
+}
 
 * {
   margin: 0;
@@ -25,61 +28,16 @@
   text-align: left;
   /* border: 1px solid brown; */
 }
-.DPE_label {
-  width: 300px;
-  border: 1px solid black;
-  margin: 20px;
-  display: none;
-}
-.DPE_label ul {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: space-around;
-  align-items: flex-start;
-  align-content: stretch;
-}
-.DPE_label li {
-  margin-top: 3px;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  /*width: 92px;
-  height: 33px;
-  clip-path: polygon(0% 0%, 85% 0, 100% 50%, 85% 100%, 0% 100%);*/
+
+h1 {
   color: white;
-  text-transform: uppercase;
-  padding-left: 10px;
-  font-family: Helvetica, sans-serif;
-  font-weight: bold;
-  font-size: 1.6rem;
+  text-align: center;
+  padding: 10px;
 }
-.DPE_label_polygon {
-  margin-top: 3px;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  color: white;
-  text-transform: uppercase;
-  padding-left: 10px;
-  font-family: Helvetica, sans-serif;
-  font-weight: bold;
-  font-size: 1.6rem;
-  position: absolute;
-  transform: translateX(-7px) translateY(-2px);
-}
+
 canvas {
-  border: 1px black solid;
-}
-.DPE_label_small {
-  width: 300;
-  height: 300;
-}
-.DPE_label_medium {
-  width: 600;
-  height: 600;
-}
-.DPE_label_large {
-  width: 1024;
-  height: 1024;
+  background: white;
+  width: 500px;
+  height: 500px;
+  margin: 10px;
 }

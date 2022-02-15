@@ -9,7 +9,7 @@
 }
 
 :root {
-  --main-bg-color: brown;
+  --main-bg-color: rgb(42, 99, 165);
   --color-1: #1c4d92;
   --color-2: #0093c4;
   --color-3: #646d77;
@@ -26,7 +26,7 @@
 }
 
 body {
-  background: whitesmoke;
+  background: var("--main-bg-color");
   height: 100vh;
   font-family: "font-regular", sans-serif;
 }
