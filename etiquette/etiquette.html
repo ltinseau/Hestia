@@ -9,8 +9,35 @@
   </head>
   <body>
     <h1>Générateur d'étiquette DPE et GES</h1>
-    <canvas id="DPEcvs" width="700px" height="700px"></canvas>
-    <canvas id="GLScvs" width="700px" height="700px"></canvas>
+    <form>
+      <div id="formulaireDPE_GLS">
+        <div class="form_DPE">
+          <label for="DPE_ranking">
+            <h3>Niveau de consommation DPE:</h3>
+            <br />
+            <input type="text" id="DPE_ranking" name="DPE_ranking" />
+          </label>
+          KWh/m²/an
+        </div>
+        <div class="form_GLS">
+          <label for="GLS_ranking">
+            <h3>Niveau d'emmision GLS:</h3>
+            <br />
+            <input type="text" id="GLS_ranking" name="GLS_ranking" />
+          </label>
+          KgCO<sub>2</sub>/m²/an
+        </div>
+      </div>
+      <div class="validation">
+        <button name="button" type="submit" id="DPE_GLS_OK">
+          Générer les étiquettes
+        </button>
+      </div>
+    </form>
+    <div class="displayLabel">
+      <canvas id="DPEcvs" width="700px" height="700px" class="hide"></canvas>
+      <canvas id="GLScvs" width="700px" height="700px" class="hide"></canvas>
+    </div>
 
     <script src="./etiquette.js"></script>
   </body>

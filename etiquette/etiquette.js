@@ -31,15 +31,15 @@ const DPE_label_pos = [0, 0, DPEgraphWidth, DPEgraphWidth];
 const GLS_label_pos = [0, 0, GLSgraphWidth, GLSgraphWidth];
 //[82, 109, 137, 166, 195, 224, 252];
 
-const DPE_rating = 240;
-const GLS_rating = 128;
+let DPE_rating;
+let GLS_rating;
 
-console.log("padX = " + padX);
-console.log("padY = " + padY);
-console.log("DPEgraphWidth = " + DPEgraphWidth);
-console.log("GLSpadX = " + GLSpadX);
-console.log("GLSpadY = " + GLSpadY);
-console.log("GLSgraphWidth = " + GLSgraphWidth);
+// console.log("padX = " + padX);
+// console.log("padY = " + padY);
+// console.log("DPEgraphWidth = " + DPEgraphWidth);
+// console.log("GLSpadX = " + GLSpadX);
+// console.log("GLSpadY = " + GLSpadY);
+// console.log("GLSgraphWidth = " + GLSgraphWidth);
 
 // ----------------------------------------------
 //   etiquette via un CANVAS
@@ -48,8 +48,10 @@ console.log("GLSgraphWidth = " + GLSgraphWidth);
 // fonction pour déterminer la classe DPE (DPE_rating)
 // return une lettre ou un chiffre
 // -----> à revoir avec la prise en compte du GLS
-function set_class_DPE(DPE_rating) {
+function set_class_DPE(DPE_rating, GLS_rating) {
   let class_DPE = ["A", 0];
+  let DPERanking;
+  let GLSRanking = set_class_GLS(GLS_rating);
   if (DPE_rating <= 70) {
     class_DPE = ["A", 0];
   } else if (DPE_rating <= 110) {
@@ -65,17 +67,23 @@ function set_class_DPE(DPE_rating) {
   } else {
     class_DPE = ["G", 6];
   }
-  return class_DPE;
+  class_DPE[1] <= GLSRanking[1]
+    ? (DPERanking = GLSRanking)
+    : (DPERanking = class_DPE);
+
+  return DPERanking;
 }
 
 // fonction pour calculer les coordonnées de chaque polygone (DPE_rating)
 // return un tableau d'objet avec les coordonnées de chaque polygone
-function set_DPE_label_position(DPE_rating) {
+function set_DPE_label_position(DPE_rating, GLS_rating) {
   let labelPos = new Array();
   let labelHeight = (33 / 288) * DPE_label_pos[3];
-  console.log("labelHeight:" + labelHeight);
   for (i = 0; i <= 6; i++) {
-    if (set_class_DPE(DPE_rating)[1] == i && DPE_label_pos[3] != 0) {
+    if (
+      set_class_DPE(DPE_rating, GLS_rating)[1] == i &&
+      DPE_label_pos[3] != 0
+    ) {
       labelHeight = (72 / 288) * DPE_label_pos[3];
     } else {
       labelHeight = (33 / 288) * DPE_label_pos[3];
@@ -120,7 +128,7 @@ function set_DPE_label_position(DPE_rating) {
           [DPE_label_pos[0], labelHeight + labelPos[i - 1][3][1] + 3], //pt E
         ]);
   }
-  console.log(labelPos);
+
   return labelPos;
 }
 
@@ -140,8 +148,8 @@ function draw_DPE_polygon(label_pos, color) {
 }
 
 // fonction qui trace le contour du polygone, le cartouche et les lettrages (label_pos, index, DPE Rating)
-function draw_DPE_stroke(label_pos, index, rating) {
-  let classDPE = set_class_DPE(rating)[1];
+function draw_DPE_stroke(label_pos, index, DPErating, GLSrating) {
+  let classDPE = set_class_DPE(DPErating, GLSrating)[1];
   let font1 = "bold " + DPEcvsWidth / 200 + "rem verdana";
   let font2 = " " + (0.7 * DPEcvsWidth) / 400 + "rem verdana";
   let fontL = "bold " + DPEcvsWidth / 130 + "rem verdana";
@@ -324,20 +332,23 @@ function draw_DPE_stroke(label_pos, index, rating) {
   }
 }
 
-// fonction qui trace toute l'étiquette (DPE-rating)
-function DPE_labelDisplay(DPE_rating) {
+// fonction qui trace toute l'étiquette (DPE_rating, GLS_rating)
+function DPE_labelDisplay(DPE_rating, GLS_rating) {
+  const DPEcvs = document.getElementById("DPEcvs");
   let positions = new Array();
   let fontl = "normal " + DPEcvsWidth / 600 + "rem verdana";
-  positions = set_DPE_label_position(DPE_rating);
+  let ctx = DPEcvs.getContext("2d");
+  positions = set_DPE_label_position(DPE_rating, GLS_rating);
+
+  ctx.clearRect(0, 0, DPEcvs.width, DPEcvs.height);
+  ctx.beginPath();
   for (i = 0; i <= 6; i++) {
-    console.log("position = " + positions[i]);
     draw_DPE_polygon(positions[i], `${labelColors[i]}`);
-    draw_DPE_stroke(positions[i], i, DPE_rating);
+    draw_DPE_stroke(positions[i], i, DPE_rating, GLS_rating);
   }
   // textes en bas et en haut du graph
-  const DPEcvs = document.getElementById("DPEcvs");
+
   if (DPEcvs.getContext) {
-    ctx = DPEcvs.getContext("2d");
     ctx.font = fontl;
     ctx.textBaseline = "middle";
     ctx.textAlign = "left";
@@ -387,7 +398,6 @@ function set_class_GLS(GLS_rating) {
 function set_GLS_label_position(GLS_rating) {
   let labelPos = new Array();
   let labelHeight = (33 / 288) * DPE_label_pos[3];
-  console.log("labelHeight:" + labelHeight);
   for (i = 0; i <= 6; i++) {
     if (set_class_GLS(GLS_rating)[1] == i && GLS_label_pos[3] != 0) {
       labelHeight = (72 / 288) * GLS_label_pos[3];
@@ -434,7 +444,7 @@ function set_GLS_label_position(GLS_rating) {
           [GLS_label_pos[0], labelHeight + labelPos[i - 1][3][1] + 3], //pt E
         ]);
   }
-  console.log(labelPos);
+
   return labelPos;
 }
 
@@ -584,28 +594,49 @@ function draw_GLS_stroke(label_pos, index, rating) {
 
 // fonction qui trace toute l'étiquette (GLS_rating)
 function GLS_labelDisplay(GLS_rating) {
+  var GLScvs = document.getElementById("GLScvs");
   let positions = new Array();
   let fontl = "normal " + GLScvsWidth / 600 + "rem verdana";
+  let fontSub = " " + (0.5 * GLScvsWidth) / 400 + "rem verdana";
   positions = set_GLS_label_position(GLS_rating);
+  var ctx = GLScvs.getContext("2d");
+  ctx.clearRect(0, 0, GLScvs.width, GLScvs.height);
+  ctx.beginPath();
+
   for (i = 0; i <= 6; i++) {
     console.log("position = " + positions[i]);
     draw_GLS_polygon(positions[i], `${GLSlabelColors[i]}`);
     draw_GLS_stroke(positions[i], i, GLS_rating);
   }
   // textes en bas et en haut du graph
-  const GLScvs = document.getElementById("GLScvs");
+
+  texte1 = "peu d'émission de CO";
   if (GLScvs.getContext) {
     ctx = GLScvs.getContext("2d");
     ctx.font = fontl;
     ctx.textBaseline = "middle";
     ctx.textAlign = "left";
     ctx.fillStyle = GLSlabelColors[1];
+    var text = ctx.measureText(texte1);
     ctx.fillText(
-      "peu d'émissions de CO2",
+      texte1,
       GLSpadX,
       GLSpadY - 0.05 * GLSgraphWidth,
       0.7 * GLSgraphWidth
     );
+
+    ctx.textBaseline = "top";
+    ctx.textAlign = "left";
+    ctx.font = fontSub;
+    ctx.fillStyle = GLSlabelColors[1];
+    ctx.fillText(
+      "2",
+      GLSpadX + text.width,
+      GLSpadY - 0.05 * GLSgraphWidth,
+      0.7 * GLSgraphWidth
+    );
+
+    ctx.font = fontl;
     ctx.fillStyle = GLSlabelColors[6];
     ctx.fillText(
       "émissions très importantes",
@@ -616,9 +647,30 @@ function GLS_labelDisplay(GLS_rating) {
   }
 }
 
-window.addEventListener("load", DPE_labelDisplay(DPE_rating));
-window.addEventListener("load", GLS_labelDisplay(GLS_rating));
+document.getElementById("DPE_ranking").addEventListener("input", (e) => {
+  DPE_rating = e.target.value;
+});
 
-// console.log(set_class_DPE(500));
-console.log(set_DPE_label_position(DPE_rating));
-console.log(draw_DPE_stroke(DPE_rating));
+document.getElementById("GLS_ranking").addEventListener("input", (e) => {
+  GLS_rating = e.target.value;
+});
+
+const form = document.querySelector("form");
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  console.log("TEST1 OK");
+  console.log("DPE :" + DPE_rating);
+  console.log("GLS : " + GLS_rating);
+  if (DPE_rating == "" || GLS_rating == "") {
+    console.log("ERREUR !!!");
+    document.getElementById("DPEcvs").classList.add("hide");
+    document.getElementById("GLScvs").classList.add("hide");
+  } else {
+    console.log("TEST2 OK");
+    document.getElementById("DPEcvs").classList.remove("hide");
+    document.getElementById("GLScvs").classList.remove("hide");
+    DPE_labelDisplay(DPE_rating, GLS_rating);
+    GLS_labelDisplay(GLS_rating);
+  }
+});
