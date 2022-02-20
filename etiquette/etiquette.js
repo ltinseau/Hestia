@@ -7,21 +7,39 @@ const labelColors = [
   "rgb(235, 130, 53)",
   "rgb(215, 34, 31)",
 ];
+const GLSlabelColors = [
+  "rgb(164, 219, 248)",
+  "rgb(140, 180, 211)",
+  "rgb(119, 146, 177)",
+  "rgb(96, 111, 143)",
+  "rgb(77, 82, 113)",
+  "rgb(77, 82, 113)",
+  "rgb(40, 27, 53)",
+];
 const lettres = ["A", "B", "C", "D", "E", "F", "G"];
 const DPEcvsWidth = 700;
 const DPEcvsHeight = 700;
+const GLScvsWidth = 700;
+const GLScvsHeight = 700;
 const DPEgraphWidth = (DPEcvsWidth - 20) / 1.56;
+const GLSgraphWidth = (GLScvsWidth - 20) / 1.56;
 const padX = 10 + DPEgraphWidth * 0.56;
 const padY = (DPEcvsHeight - DPEgraphWidth) / 2;
+const GLSpadX = GLScvsWidth * 0.03;
+const GLSpadY = 10 + (GLScvsHeight - GLSgraphWidth) / 2;
 const DPE_label_pos = [0, 0, DPEgraphWidth, DPEgraphWidth];
+const GLS_label_pos = [0, 0, GLSgraphWidth, GLSgraphWidth];
 //[82, 109, 137, 166, 195, 224, 252];
 
 const DPE_rating = 240;
-const GLS_rating = 62;
+const GLS_rating = 128;
 
 console.log("padX = " + padX);
 console.log("padY = " + padY);
 console.log("DPEgraphWidth = " + DPEgraphWidth);
+console.log("GLSpadX = " + GLSpadX);
+console.log("GLSpadY = " + GLSpadY);
+console.log("GLSgraphWidth = " + GLSgraphWidth);
 
 // ----------------------------------------------
 //   etiquette via un CANVAS
@@ -340,7 +358,266 @@ function DPE_labelDisplay(DPE_rating) {
   }
 }
 
+// *******************************etiquette GLS ***************************
+
+// fonction pour déterminer la classe GLS (GLS_rating)
+// return une lettre ou un chiffre
+function set_class_GLS(GLS_rating) {
+  let class_GLS = ["A", 0];
+  if (GLS_rating <= 6) {
+    class_GLS = ["A", 0];
+  } else if (GLS_rating <= 11) {
+    class_GLS = ["B", 1];
+  } else if (GLS_rating <= 30) {
+    class_GLS = ["C", 2];
+  } else if (GLS_rating <= 50) {
+    class_GLS = ["D", 3];
+  } else if (GLS_rating <= 70) {
+    class_GLS = ["E", 4];
+  } else if (GLS_rating <= 100) {
+    class_GLS = ["F", 5];
+  } else {
+    class_GLS = ["G", 6];
+  }
+  return class_GLS;
+}
+
+// fonction pour calculer les coordonnées de chaque polygone (DPE_rating)
+// return un tableau d'objet avec les coordonnées de chaque polygone
+function set_GLS_label_position(GLS_rating) {
+  let labelPos = new Array();
+  let labelHeight = (33 / 288) * DPE_label_pos[3];
+  console.log("labelHeight:" + labelHeight);
+  for (i = 0; i <= 6; i++) {
+    if (set_class_GLS(GLS_rating)[1] == i && GLS_label_pos[3] != 0) {
+      labelHeight = (72 / 288) * GLS_label_pos[3];
+    } else {
+      labelHeight = (33 / 288) * GLS_label_pos[3];
+    }
+    i == 0
+      ? (labelPos[0] = [
+          [GLS_label_pos[0], GLS_label_pos[1]], //pt A
+          [
+            (82 / 288) * GLS_label_pos[2] -
+              (labelHeight / 2) * Math.tan((36 * Math.PI) / 180),
+            GLS_label_pos[1],
+          ], //pt B
+          [(82 / 288) * GLS_label_pos[2], labelHeight / 2], //pt C
+          [
+            (82 / 288) * GLS_label_pos[2] -
+              (labelHeight / 2) * Math.tan((36 * Math.PI) / 180),
+            labelHeight,
+          ], //pt D
+          [GLS_label_pos[0], labelHeight], //pt E
+        ])
+      : (labelPos[i] = [
+          [GLS_label_pos[0], GLS_label_pos[1] + labelPos[i - 1][3][1] + 3], //pt A
+          [
+            labelPos[i - 1][2][0] +
+              ((labelPos[i - 1][4][1] - labelPos[i - 1][0][1]) / 2) *
+                Math.tan((36 * Math.PI) / 180),
+            GLS_label_pos[1] + labelPos[i - 1][3][1] + 3,
+          ], //pt B
+          [
+            labelPos[i - 1][2][0] +
+              (labelHeight / 2 +
+                (labelPos[i - 1][4][1] - labelPos[i - 1][0][1]) / 2) *
+                Math.tan((36 * Math.PI) / 180),
+            labelHeight / 2 + labelPos[i - 1][3][1] + 3,
+          ], //pt C
+          [
+            labelPos[i - 1][2][0] +
+              ((labelPos[i - 1][4][1] - labelPos[i - 1][0][1]) / 2) *
+                Math.tan((36 * Math.PI) / 180),
+            labelHeight + labelPos[i - 1][3][1] + 3,
+          ], //pt D
+          [GLS_label_pos[0], labelHeight + labelPos[i - 1][3][1] + 3], //pt E
+        ]);
+  }
+  console.log(labelPos);
+  return labelPos;
+}
+
+// fonction qui dessine un polygone (coordonnées)
+function draw_GLS_polygon(label_pos, color) {
+  const GLScvs = document.getElementById("GLScvs");
+
+  ctx = GLScvs.getContext("2d");
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(GLSpadX + label_pos[0][0], GLSpadY + label_pos[0][1]);
+  ctx.lineTo(GLSpadX + label_pos[1][0], GLSpadY + label_pos[1][1]);
+  ctx.arc(
+    GLSpadX + label_pos[1][0],
+    GLSpadY + label_pos[2][1],
+    (label_pos[3][1] - label_pos[1][1]) / 2,
+    Math.PI * 1.5,
+    Math.PI * 0.5
+  );
+  ctx.lineTo(GLSpadX + label_pos[4][0], GLSpadY + label_pos[4][1]);
+  ctx.fill();
+}
+
+// fonction qui trace le contour du polygone, le cartouche et les lettrages (label_pos, index, GLS Rating)
+function draw_GLS_stroke(label_pos, index, rating) {
+  let classGLS = set_class_GLS(rating)[1];
+  let font1 = "bold " + GLScvsWidth / 200 + "rem verdana";
+  let font2 = " " + (0.7 * GLScvsWidth) / 400 + "rem verdana";
+  let fontL = "bold " + GLSgraphWidth / 80 + "rem verdana";
+  let fontl = "bold " + GLSgraphWidth / 140 + "rem verdana";
+  let fontSub = " " + (0.5 * GLScvsWidth) / 400 + "rem verdana";
+  let fontConso = "bold" + GLScvsWidth / 500 + "rem verdana";
+
+  const GLScvs = document.getElementById("GLScvs");
+  if (index == classGLS) {
+    if (GLScvs.getContext) {
+      ctx = GLScvs.getContext("2d");
+      ctx.fillStyle = "rga(0,0,0,1)";
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(GLSpadX + label_pos[0][0], GLSpadY + label_pos[0][1]); //pt A
+      ctx.lineTo(GLSpadX + label_pos[1][0], GLSpadY + label_pos[1][1]); // pt B
+      ctx.arc(
+        GLSpadX + label_pos[1][0],
+        GLSpadY + label_pos[2][1],
+        (label_pos[3][1] - label_pos[1][1]) / 2,
+        Math.PI * 1.5,
+        Math.PI * 0.5
+      );
+      ctx.lineTo(GLSpadX + label_pos[4][0], GLSpadY + label_pos[4][1]); // pt E
+      ctx.closePath();
+      ctx.stroke();
+
+      // ligne horizontale
+      ctx.fillStyle = "rga(0,0,0,1)";
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(
+        GLSpadX + label_pos[2][0] + GLSgraphWidth / 20,
+        GLSpadY + label_pos[2][1]
+      );
+      ctx.lineTo(GLSpadX + GLSgraphWidth, GLSpadY + label_pos[2][1]);
+      ctx.stroke();
+
+      // texte lettrage GLS
+      //let fontSub = " " + (0.5 * DPEcvsWidth) / 400 + "rem verdana";
+      ctx.fillStyle = "black";
+      ctx.font = font1;
+      ctx.textBaseline = "middle";
+      ctx.textAlign = "left";
+      var text = ctx.measureText(GLS_rating);
+      var largeur = text.width;
+      ctx.fillText(
+        GLS_rating,
+        GLSpadX + GLSgraphWidth + 0.025 * GLSgraphWidth,
+        GLSpadY + label_pos[2][1],
+        0.23 * GLSgraphWidth
+      );
+
+      // texte unités GLS
+      ctx.fillStyle = "black";
+      ctx.font = font2;
+      ctx.textBaseline = "middle";
+      ctx.textAlign = "left";
+
+      console.log("largeur du texte: " + largeur + "px");
+      ctx.fillText(
+        " kgCO",
+        GLSpadX + 1.025 * GLSgraphWidth + largeur,
+        GLSpadY + label_pos[2][1] + GLSgraphWidth * 0.02,
+        0.1 * GLSgraphWidth
+      );
+      ctx.textBaseline = "top";
+      ctx.font = fontSub;
+      ctx.fillText(
+        "2",
+        GLSpadX + 1.125 * GLSgraphWidth + largeur,
+        GLSpadY + label_pos[2][1] + GLSgraphWidth * 0.02,
+        0.014 * GLSgraphWidth
+      );
+      ctx.textBaseline = "middle";
+      ctx.font = font2;
+      ctx.fillText(
+        "/m²/an",
+        GLSpadX + 1.14 * GLSgraphWidth + largeur,
+        GLSpadY + label_pos[2][1] + GLSgraphWidth * 0.02,
+        0.12 * GLSgraphWidth
+      );
+
+      // incrustation de la lettre
+      //let fontL = "bold " + DPEcvsWidth / 130 + "rem verdana";
+      ctx.font = fontL;
+      ctx.textBaseline = "middle";
+      ctx.textAlign = "left";
+      ctx.fillStyle = "white";
+      ctx.fillText(
+        lettres[i],
+        GLSpadX + label_pos[0][0] + 0.02 * GLSgraphWidth,
+        GLSpadY + label_pos[2][1] + 0.013 * GLSgraphWidth,
+        0.15 * GLSgraphWidth
+      );
+      ctx.strokeText(
+        lettres[i],
+        GLSpadX + label_pos[0][0] + 0.02 * GLSgraphWidth,
+        GLSpadY + label_pos[2][1] + 0.013 * GLSgraphWidth,
+        0.15 * GLSgraphWidth
+      );
+    }
+  } else {
+    // incrustation des autres lettres
+    if (GLScvs.getContext) {
+      ctx = GLScvs.getContext("2d");
+      //let fontl = "bold " + DPEcvsWidth / 240 + "rem verdana";
+      ctx.font = fontl;
+      ctx.textBaseline = "middle";
+      ctx.textAlign = "left";
+      ctx.fillStyle = "white";
+      ctx.fillText(
+        lettres[i],
+        GLSpadX + 0.024 * GLSgraphWidth,
+        GLSpadY + 0.01 * GLSgraphWidth + label_pos[2][1],
+        0.13 * GLSgraphWidth
+      );
+    }
+  }
+}
+
+// fonction qui trace toute l'étiquette (GLS_rating)
+function GLS_labelDisplay(GLS_rating) {
+  let positions = new Array();
+  let fontl = "normal " + GLScvsWidth / 600 + "rem verdana";
+  positions = set_GLS_label_position(GLS_rating);
+  for (i = 0; i <= 6; i++) {
+    console.log("position = " + positions[i]);
+    draw_GLS_polygon(positions[i], `${GLSlabelColors[i]}`);
+    draw_GLS_stroke(positions[i], i, GLS_rating);
+  }
+  // textes en bas et en haut du graph
+  const GLScvs = document.getElementById("GLScvs");
+  if (GLScvs.getContext) {
+    ctx = GLScvs.getContext("2d");
+    ctx.font = fontl;
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "left";
+    ctx.fillStyle = GLSlabelColors[1];
+    ctx.fillText(
+      "peu d'émissions de CO2",
+      GLSpadX,
+      GLSpadY - 0.05 * GLSgraphWidth,
+      0.7 * GLSgraphWidth
+    );
+    ctx.fillStyle = GLSlabelColors[6];
+    ctx.fillText(
+      "émissions très importantes",
+      GLSpadX,
+      GLSpadY + 1.04 * GLSgraphWidth,
+      0.7 * GLSgraphWidth
+    );
+  }
+}
+
 window.addEventListener("load", DPE_labelDisplay(DPE_rating));
+window.addEventListener("load", GLS_labelDisplay(GLS_rating));
 
 // console.log(set_class_DPE(500));
 console.log(set_DPE_label_position(DPE_rating));
