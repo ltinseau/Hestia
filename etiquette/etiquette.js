@@ -530,7 +530,6 @@ function draw_GLS_stroke(label_pos, index, rating) {
       ctx.textBaseline = "middle";
       ctx.textAlign = "left";
 
-      console.log("largeur du texte: " + largeur + "px");
       ctx.fillText(
         " kgCO",
         GLSpadX + 1.025 * GLSgraphWidth + largeur,
@@ -604,7 +603,7 @@ function GLS_labelDisplay(GLS_rating) {
   ctx.beginPath();
 
   for (i = 0; i <= 6; i++) {
-    console.log("position = " + positions[i]);
+    // console.log("position = " + positions[i]);
     draw_GLS_polygon(positions[i], `${GLSlabelColors[i]}`);
     draw_GLS_stroke(positions[i], i, GLS_rating);
   }
@@ -658,18 +657,33 @@ document.getElementById("GLS_ranking").addEventListener("input", (e) => {
 const form = document.querySelector("form");
 
 form.addEventListener("submit", (e) => {
+  let affichage = true;
   e.preventDefault();
-  console.log("TEST1 OK");
   console.log("DPE :" + DPE_rating);
   console.log("GLS : " + GLS_rating);
-  if (DPE_rating == "" || GLS_rating == "") {
-    console.log("ERREUR !!!");
+  if (isNaN(DPE_rating) || DPE_rating == "") {
+    console.log("ERREUR sur champ DPE!!!");
     document.getElementById("DPEcvs").classList.add("hide");
     document.getElementById("GLScvs").classList.add("hide");
-  } else {
-    console.log("TEST2 OK");
+    document.getElementById("DPE_ranking").style.backgroundColor = "plum";
+    document.getElementById("DPE_GLS").classList.add("DPE_GLS_NOK");
+    affichage = false;
+  }
+  if (isNaN(GLS_rating) || DPE_rating == "") {
+    console.log("ERREUR sur champ GLS!!!");
+    document.getElementById("DPEcvs").classList.add("hide");
+    document.getElementById("GLScvs").classList.add("hide");
+    document.getElementById("GLS_ranking").style.backgroundColor = "plum";
+    document.getElementById("DPE_GLS").classList.add("DPE_GLS_NOK");
+    affichage = false;
+  }
+  if (affichage == true) {
+    console.log("DPE et GLS renseignés: OK !!!!");
     document.getElementById("DPEcvs").classList.remove("hide");
     document.getElementById("GLScvs").classList.remove("hide");
+    document.getElementById("DPE_ranking").style.backgroundColor = "plum";
+    document.getElementById("GLS_ranking").style.backgroundColor = "plum";
+    document.getElementById("DPE_GLS").classList.remove("DPE_GLS_NOK");
     DPE_labelDisplay(DPE_rating, GLS_rating);
     GLS_labelDisplay(GLS_rating);
   }
